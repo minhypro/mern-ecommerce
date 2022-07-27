@@ -6,7 +6,7 @@ function Routes() {
     return (
         <ReactRoutes>
             <Route path='/' element={<HomeScreen/>}/>
-            <Route path='/products/:productId' element={<ProductScreen/>}/>
+            <Route path='/products/:id' element={<ProductScreen/>}/>
         </ReactRoutes>
     );
 }

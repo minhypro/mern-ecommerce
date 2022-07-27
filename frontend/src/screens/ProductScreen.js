@@ -1,13 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Row, Col, ListGroup, Image, Button } from 'react-bootstrap';
 import { useParams } from 'react-router';
-import products from '../products';
 import Rating from '../components/Rating';
+import productsApi from '../api/productsApi'
 
 function ProductScreen() {
     const params = useParams();
-    const product = products.find(p => p._id === params.productId)
+    const [product, setProduct] = useState({});
+    useEffect(() => {
+        const fetchProduct = async () => {
+            const res = await productsApi.getProduct(params.id)
+            setProduct(res)
+        }
+        fetchProduct()
+    }, [params.id])
+
 
     return (
         <>
@@ -43,9 +51,7 @@ function ProductScreen() {
                             <div>
                                 {product.countInStock > 0 ? `In Stock: ${product.countInStock}` : "Out of Stock"}
                             </div>
-                        </ListGroup.Item>
-                        <ListGroup.Item>
-                            <Button type="button" disabled={product.countInStock === 0} >Add to Cart</Button>
+                            <Button className="mt-3" type="button" disabled={product.countInStock === 0} >Add to Cart</Button>
                         </ListGroup.Item>
                     </ListGroup>
                 </Col>
