@@ -3,12 +3,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col } from 'react-bootstrap'
 import Product from '../components/Product'
 import { listProducts } from '../actions/productActions'
+import Loader from '../components/Loader'
+import Message from '../components/Message'
 
 function HomeScreen() {
     const dispatch = useDispatch()
 
     const productList = useSelector(state => state.productList)
-    console.log(productList);
     const { loading, error, products } = productList
 
     useEffect(() => {
@@ -19,11 +20,10 @@ function HomeScreen() {
         <>
             <h1>Latest Products</h1>
             {loading ? (
-                <h2>Loading...</h2>
+                <Loader/>
             ) : error ? (
-                <h3>Error</h3>
+                <Message variant='danger'>{error.data.message}</Message>
             ) : (
-
                 <Row>
                     {products.map(product => (
                         <Col key={product._id} sm={12} md={6} lg={4} xl={3} >

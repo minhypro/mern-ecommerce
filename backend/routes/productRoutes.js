@@ -10,7 +10,11 @@ const router = express.Router()
 
 router.get('/', async function (req, res) {
     const products = await Product.find()
-    res.json(products)
+    if (products) {
+        res.json(products)
+    } else {
+        res.status(404).json({ message: 'Product not found' })
+    }
 })
 
 
