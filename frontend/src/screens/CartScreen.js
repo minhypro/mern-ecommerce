@@ -1,34 +1,34 @@
-import React, { useEffect } from 'react';
-import { useParams, useLocation, Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { ListGroup, Row, Col, Image, Form, Button, Card } from 'react-bootstrap';
-import Message from '../components/Message';
-import { addToCart, removeFromCart } from '../actions/cartActions';
+import React, { useEffect } from 'react'
+import { useParams, useLocation, Link, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { ListGroup, Row, Col, Image, Form, Button, Card } from 'react-bootstrap'
+import Message from '../components/Message'
+import { addToCart, removeFromCart } from '../actions/cartActions'
 
 function CartScreen() {
-    const productId = useParams().id;
-    const location = useLocation();
+    const productId = useParams().id
+    const location = useLocation()
     const navigate = useNavigate()
-    const qty = location.search ? Number(location.search.split('=')[1]) : 1;
+    const qty = location.search ? Number(location.search.split('=')[1]) : 1
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
 
-    const cart = useSelector((state) => state.cart);
-    const { cartItems } = cart;
+    const cart = useSelector((state) => state.cart)
+    const { cartItems } = cart
 
     useEffect(() => {
         if (productId) {
-            dispatch(addToCart(productId, qty));
+            dispatch(addToCart(productId, qty))
         }
-    }, [dispatch, productId, qty]);
+    }, [dispatch, productId, qty])
 
     const removeFromCartHandler = (id) => {
         dispatch(removeFromCart(id))
-    };
+    }
 
     const checkoutHandler = () => {
         navigate('/login?redirect=shipping')
-    };
+    }
 
     return (
         <Row>
@@ -61,7 +61,12 @@ function CartScreen() {
                                                 max={`${item.countInStock}`}
                                                 value={item.qty}
                                                 onChange={(e) =>
-                                                    dispatch(addToCart(item.product, Number(e.target.value)))
+                                                    dispatch(
+                                                        addToCart(
+                                                            item.product,
+                                                            Number(e.target.value)
+                                                        )
+                                                    )
                                                 }
                                             />
                                         </Form>
@@ -85,8 +90,14 @@ function CartScreen() {
                 <Card>
                     <ListGroup variant='flush'>
                         <ListGroup.Item>
-                            <h2>Subtotal: ({cartItems.reduce((acc, item) => acc + item.qty, 0)}) items</h2>
-                            ${cartItems.reduce((acc, item) => acc + item.qty * item.price, 0).toFixed(2)}
+                            <h2>
+                                Subtotal: ({cartItems.reduce((acc, item) => acc + item.qty, 0)})
+                                items
+                            </h2>
+                            $
+                            {cartItems
+                                .reduce((acc, item) => acc + item.qty * item.price, 0)
+                                .toFixed(2)}
                         </ListGroup.Item>
                         <ListGroup.Item>
                             <Button
@@ -101,8 +112,8 @@ function CartScreen() {
                     </ListGroup>
                 </Card>
             </Col>
-        </Row> 
-    );
+        </Row>
+    )
 }
 
-export default CartScreen;
+export default CartScreen
