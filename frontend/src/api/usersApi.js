@@ -7,6 +7,13 @@ const usersApi = {
             password,
         })
     },
+    register: (name, email, password) => {
+        return axiosClient.post('/api/users/', {
+            name,
+            email,
+            password,
+        })
+    },
 }
 
 export default usersApi

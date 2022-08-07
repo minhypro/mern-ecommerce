@@ -8,8 +8,11 @@ import asyncHandler from 'express-async-handler'
 // @access  Public
 const authUser = asyncHandler(async function (req, res) {
     const { email, password } = req.body
-    console.log(req.body);
 
+    if (!email || !password) {
+        throw new Error('Please fill all required fields')
+    }
+    
     const user = await User.findOne({ email })
 
     if (user) {
@@ -37,6 +40,11 @@ const authUser = asyncHandler(async function (req, res) {
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
     const { email, name, password } = req.body
+
+    if (!email || !name || !password) {
+        throw new Error('Please fill all required fields')
+    }
+
     const existUser = await User.findOne({ email })
 
     if (existUser) {
