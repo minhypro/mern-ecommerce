@@ -4,6 +4,7 @@ import ProductScreen from '../screens/ProductScreen'
 import CartScreen from '../screens/CartScreen'
 import LoginScreen from '../screens/LoginScreen'
 import RegisterScreen from '../screens/RegisterScreen'
+import ProfileScreen from '../screens/ProfileScreen'
 
 function Routes() {
     return (
@@ -14,6 +15,7 @@ function Routes() {
             <Route path='/cart/:id' element={<CartScreen/>}/>
             <Route path='/login' element={<LoginScreen/>}/>
             <Route path='/register' element={<RegisterScreen/>}/>
+            <Route path='/profile' element={<ProfileScreen/>}/>
         </ReactRoutes>
     );
 }

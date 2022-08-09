@@ -12,7 +12,7 @@ const authUser = asyncHandler(async function (req, res) {
     if (!email || !password) {
         throw new Error('Please fill all required fields')
     }
-    
+
     const user = await User.findOne({ email })
 
     if (user) {
@@ -70,7 +70,6 @@ const registerUser = asyncHandler(async (req, res) => {
         res.status(400)
         throw new Error('Invalid user data')
     }
-
 })
 
 // @desc    Get user profile
@@ -92,4 +91,31 @@ const getUserProfile = asyncHandler(async (req, res) => {
     }
 })
 
-export { authUser, registerUser, getUserProfile }
+// @desc    Update user profile
+// @route   PUT /api/users/profile
+// @access  Private
+const updateUserProfile = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.user._id)
+    if (user) {
+        user.name = req.body.name || user.name
+
+        if (req.body.password) {
+            user.password = bcrypt.hashSync(req.body.password, 10)
+        }
+
+        const updateUser = await user.save()
+
+        res.json({
+            _id: updateUser._id,
+            name: updateUser.name,
+            email: updateUser.email,
+            isAdmin: updateUser.isAdmin,
+            token: generateToken(updateUser._id),
+        })
+    } else {
+        res.status(404)
+        throw new Error('User not found')
+    }
+})
+
+export { authUser, registerUser, getUserProfile, updateUserProfile }

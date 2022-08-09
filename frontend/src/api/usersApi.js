@@ -1,4 +1,5 @@
 import axiosClient from './axiosClient'
+import axios from 'axios'
 
 const usersApi = {
     login: (email, password) => {
@@ -14,6 +15,31 @@ const usersApi = {
             password,
         })
     },
+    getProfile: (id, token) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + token
+            },
+            body: {
+                'test': 'text'
+            }
+        }
+        return axiosClient.get(
+            `/api/users/${id}`, config )
+    },
+
+    updateProfile: (user, token) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + token
+            }
+        }
+        return axiosClient.put(
+            `/api/users/profile`, user, config )
+    },
+    
 }
 
 export default usersApi
