@@ -18,7 +18,9 @@ function PaymentScreen() {
 
     const [paymentMethod, setSetPaymentMethod] = useState(null)
 
-    console.log(paymentMethod, 'state');
+    useEffect(() => {
+        setSetPaymentMethod(cart.paymentMethod)
+    }, [cart])
 
     const submitHandler = (e) => {
         e.preventDefault()
@@ -26,9 +28,11 @@ function PaymentScreen() {
         navigate('/placeorder')
     }
 
+    const stepCount = cart.paymentMethod ? 4 : 3
+
     return (
         <FormContainer>
-            <CheckoutStep step1 step2 step3 />
+            <CheckoutStep step={stepCount} />
             <h1>Payment Method</h1>
             <Form onSubmit={submitHandler}>
                 <Form.Group>
@@ -36,35 +40,32 @@ function PaymentScreen() {
 
                     <Col>
                         <Form.Check
-                        required
+                            required
+                            checked={paymentMethod === 'paypal'}
                             type='radio'
                             label='PayPal or Credit Card'
                             id='paypal'
                             name='paymentMethod'
                             value='paypal'
-                            onChange={(e) => {
-                                console.log(e.target.value)
-                                return setSetPaymentMethod(e.target.value)}}
+                            onChange={(e) => setSetPaymentMethod(e.target.value)}
                         ></Form.Check>
                         <Form.Check
+                            checked={paymentMethod === 'stripe'}
                             type='radio'
                             label='Stripe'
                             id='stripe'
                             name='paymentMethod'
                             value='stripe'
-                            onChange={(e) => {
-                                console.log(e.target.value)
-                                return setSetPaymentMethod(e.target.value)}}
+                            onChange={(e) => setSetPaymentMethod(e.target.value)}
                         ></Form.Check>
                         <Form.Check
+                            checked={paymentMethod === 'bankTransfer'}
                             type='radio'
                             label='Bank Transfer'
                             id='bank_transfer'
                             name='paymentMethod'
                             value='bankTransfer'
-                            onChange={(e) => {
-                                console.log(e.target.value)
-                                return setSetPaymentMethod(e.target.value)}}
+                            onChange={(e) => setSetPaymentMethod(e.target.value)}
                         ></Form.Check>
                     </Col>
                 </Form.Group>

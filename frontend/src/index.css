@@ -38,3 +38,7 @@ form div {
 button.btn {
   margin-right: 10px;
 }
+
+.nav-item.active {
+  background-color: #ccc
+}
