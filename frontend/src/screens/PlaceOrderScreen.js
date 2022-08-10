@@ -31,7 +31,7 @@ function PlaceOrderScreen() {
         // eslint-disable-next-line
     },[navigate, success])
 
-    const placeholderHandler = () => {
+    const placeOrderHandler = () => {
         dispatch(createOrder({
             orderItems: cart.cartItems,
             shippingAddress: cart.shippingAddress,
@@ -142,7 +142,7 @@ function PlaceOrderScreen() {
                                     type='button'
                                     className='btn-block'
                                     disabled={cart.cartItems === 0}
-                                    onClick={placeholderHandler}
+                                    onClick={placeOrderHandler}
                                 >
                                     Place Order
                                 </Button>
