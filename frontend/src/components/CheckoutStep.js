@@ -7,10 +7,10 @@ function CheckoutStep({ step }) {
     const location = useLocation()
 
     return (
-        <Nav className='justify-content-center mb4'>
+        <Nav className='justify-content-center mb-4'>
             <Nav.Item>
                 {step >= 1 ? (
-                    <LinkContainer to='/login'>
+                    <LinkContainer to='/cart'>
                         <Nav.Link>Shopping</Nav.Link>
                     </LinkContainer>
                 ) : (
