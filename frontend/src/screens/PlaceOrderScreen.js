@@ -1,13 +1,15 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, {useEffect} from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import CheckoutStep from '../components/CheckoutStep'
 import { FREE_SHIP_PRICE, SHIPPING_PRICE } from '../constants/cartConstansts'
+import { createOrder } from '../actions/orderActions'
 
 function PlaceOrderScreen() {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const cart = useSelector((state) => state.cart)
 
     cart.itemsPrice = Number(
@@ -18,7 +20,27 @@ function PlaceOrderScreen() {
             ? 0
             : Number((cart.itemsPrice * SHIPPING_PRICE).toFixed(2))
     cart.totalPrice = Number((cart.itemsPrice + cart.shippingPrice).toFixed(2))
-    const placeholderHandler = () => {}
+        
+    const orderCreate = useSelector((state) => state.orderCreate)
+    const {order, success, error} = orderCreate
+
+    useEffect(() => {
+        if(success) {
+            navigate(`/order/${order._id}`)
+        }
+        // eslint-disable-next-line
+    },[navigate, success])
+
+    const placeholderHandler = () => {
+        dispatch(createOrder({
+            orderItems: cart.cartItems,
+            shippingAddress: cart.shippingAddress,
+            paymentMethod: cart.paymentMethod,
+            itemsPrice: cart.itemsPrice,
+            shippingPrice: cart.shippingPrice,
+            totalPrice: cart.totalPrice,
+        }))
+    }
 
     return (
         <>
@@ -98,7 +120,11 @@ function PlaceOrderScreen() {
                                     {cart.shippingPrice === 0 ? (
                                         false
                                     ) : (
-                                        <Col className='text-danger'>Buy ${Number((FREE_SHIP_PRICE - cart.itemsPrice).toFixed(2))} more to get free ship</Col>
+                                        <Col className='text-danger'>
+                                            Buy $
+                                            {Number((FREE_SHIP_PRICE - cart.itemsPrice).toFixed(2))}{' '}
+                                            more to get free ship
+                                        </Col>
                                     )}
                                 </Row>
                             </ListGroup.Item>
@@ -107,6 +133,9 @@ function PlaceOrderScreen() {
                                     <Col>Total</Col>
                                     <Col>${cart.totalPrice}</Col>
                                 </Row>
+                            </ListGroup.Item>
+                            <ListGroup.Item>
+                                {error && <Message variant="danger">{error}</Message>}
                             </ListGroup.Item>
                             <ListGroup.Item>
                                 <Button

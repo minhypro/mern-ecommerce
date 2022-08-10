@@ -1,5 +1,4 @@
 import axiosClient from './axiosClient'
-import axios from 'axios'
 
 const usersApi = {
     login: (email, password) => {
@@ -20,9 +19,6 @@ const usersApi = {
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: 'Bearer ' + token
-            },
-            body: {
-                'test': 'text'
             }
         }
         return axiosClient.get(
