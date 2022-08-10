@@ -37,15 +37,25 @@ function ProfileScreen() {
                 setEmail(user.email)
             }
         }
-    }, [navigate, userInfo, dispatch, user])    
+    }, [navigate, userInfo, dispatch, user])
 
     const submitHandler = (e) => {
         e.preventDefault()
+        if (disableEdit) {
+            return
+        }
+
         if (password !== confirmPassword) {
             setMessage('Confirm password do not match')
         } else {
             dispatch(updateUserProfile({ id: user._id, name, password }))
         }
+    }
+
+    const [disableEdit, setDisableEdit] = useState(true)
+    const allowEdit = (e) => {
+        e.preventDefault()
+        setDisableEdit((prev) => !prev)
     }
 
     return (
@@ -60,6 +70,7 @@ function ProfileScreen() {
                     <Form.Group controlId='name'>
                         <Form.Label>Name</Form.Label>
                         <Form.Control
+                            disabled={disableEdit}
                             type='text'
                             placeholder='Enter name'
                             value={name}
@@ -84,6 +95,7 @@ function ProfileScreen() {
                     <Form.Group controlId='password'>
                         <Form.Label>Password</Form.Label>
                         <Form.Control
+                            disabled={disableEdit}
                             type='password'
                             placeholder='Enter Password'
                             value={password}
@@ -93,6 +105,7 @@ function ProfileScreen() {
                     <Form.Group controlId='confirm-password'>
                         <Form.Label>Confirm Password</Form.Label>
                         <Form.Control
+                            disabled={disableEdit}
                             type='password'
                             placeholder='Confirm Password'
                             value={confirmPassword}
@@ -100,8 +113,12 @@ function ProfileScreen() {
                         />
                     </Form.Group>
 
-                    <Button type='submit' variant='primary'>
+                    <Button type='submit' variant='primary' disabled={disableEdit}>
                         Update
+                    </Button>
+
+                    <Button type='button' variant='primary' onClick={allowEdit}>
+                        Edit
                     </Button>
                 </Form>
             </Col>

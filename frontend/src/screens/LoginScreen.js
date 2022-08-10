@@ -23,10 +23,8 @@ function LoginScreen() {
     const redirect = location.search ? location.search.split('=')[1] : '/'
 
     useEffect(() => {
-        
-
         if (userInfo && Object.keys(userInfo).length !== 0) {
-            navigate(redirect)
+            navigate( redirect === '/' ? '/' : '/' + redirect)
         }
     }, [userInfo, redirect, navigate])
 

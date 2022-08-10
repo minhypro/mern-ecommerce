@@ -30,3 +30,11 @@ h2 {
   font-size: 1.4rem;
   padding: 0.6rem 0;
 }
+
+form div {
+  margin-bottom: 10px;
+}
+
+button.btn {
+  margin-right: 10px;
+}
