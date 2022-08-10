@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { ListGroup, Row, Col, Image, Form, Button, Card } from 'react-bootstrap'
 import Message from '../components/Message'
 import { addToCart, removeFromCart } from '../actions/cartActions'
+import CheckoutStep from '../components/CheckoutStep'
 
 function CartScreen() {
     const productId = useParams().id
@@ -30,8 +31,15 @@ function CartScreen() {
         navigate('/login?redirect=shipping')
     }
 
+    const stepCount = cart.paymentMethod
+        ? 4
+        : cart.shippingAddress && Object.keys(cart.shippingAddress).length !== 0
+        ? 3
+        : 2
+
     return (
         <Row>
+            <CheckoutStep step={stepCount} />
             <Col md={8}>
                 <h1>Shopping Cart</h1>
                 {cartItems.length === 0 ? (

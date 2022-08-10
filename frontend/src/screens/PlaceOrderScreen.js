@@ -1,22 +1,24 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import CheckoutStep from '../components/CheckoutStep'
-import {FREE_SHIP_PRICE} from '../constants/cartConstansts'
+import { FREE_SHIP_PRICE, SHIPPING_PRICE } from '../constants/cartConstansts'
 
 function PlaceOrderScreen() {
     const dispatch = useDispatch()
     const cart = useSelector((state) => state.cart)
 
-    cart.itemsPrice = cart.cartItems.reduce((sum, item) => sum + item.price * item.qty, 0)
-    cart.shippingPrice = cart.itemsPrice > FREE_SHIP_PRICE ? 0 : Number((cart.itemsPrice * 10 / 100).toFixed(2))
-    console.log(cart.shippingPrice);
-    cart.totalPrice =Number((cart.itemsPrice + cart.shippingPrice).toFixed(2))
-    const placeholderHandler = () => {
-
-    }
+    cart.itemsPrice = Number(
+        cart.cartItems.reduce((sum, item) => sum + item.price * item.qty, 0).toFixed(2)
+    )
+    cart.shippingPrice =
+        cart.itemsPrice > FREE_SHIP_PRICE
+            ? 0
+            : Number((cart.itemsPrice * SHIPPING_PRICE).toFixed(2))
+    cart.totalPrice = Number((cart.itemsPrice + cart.shippingPrice).toFixed(2))
+    const placeholderHandler = () => {}
 
     return (
         <>
@@ -92,6 +94,13 @@ function PlaceOrderScreen() {
                                     <Col>Shipping</Col>
                                     <Col>${cart.shippingPrice}</Col>
                                 </Row>
+                                <Row>
+                                    {cart.shippingPrice === 0 ? (
+                                        false
+                                    ) : (
+                                        <Col className='text-danger'>Buy ${Number((FREE_SHIP_PRICE - cart.itemsPrice).toFixed(2))} more to get free ship</Col>
+                                    )}
+                                </Row>
                             </ListGroup.Item>
                             <ListGroup.Item>
                                 <Row>
@@ -100,7 +109,14 @@ function PlaceOrderScreen() {
                                 </Row>
                             </ListGroup.Item>
                             <ListGroup.Item>
-                                <Button type="button" className="btn-block" disabled={cart.cartItems ===0} onClick={placeholderHandler} >Place Order</Button>
+                                <Button
+                                    type='button'
+                                    className='btn-block'
+                                    disabled={cart.cartItems === 0}
+                                    onClick={placeholderHandler}
+                                >
+                                    Place Order
+                                </Button>
                             </ListGroup.Item>
                         </ListGroup>
                     </Card>

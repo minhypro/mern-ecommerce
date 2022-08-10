@@ -8,7 +8,7 @@ function CheckoutStep({ step }) {
 
     return (
         <Nav className='justify-content-center mb-4'>
-            <Nav.Item>
+            <Nav.Item className={location.pathname === '/cart'? 'active': ''}>
                 {step >= 1 ? (
                     <LinkContainer to='/cart'>
                         <Nav.Link>Shopping</Nav.Link>
