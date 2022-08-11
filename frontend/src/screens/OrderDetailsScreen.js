@@ -1,20 +1,19 @@
 import React, { useEffect } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
-import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap'
+import { Link, useParams } from 'react-router-dom'
+import { Row, Col, ListGroup, Image, Card } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { getOrderDetails } from '../actions/orderActions'
 
-function OrderScreen() {
+function OrderDetailsScreen() {
     const dispatch = useDispatch()
-    const navigate = useNavigate()
     const params = useParams()
     const orderId = params.id
-
+    
     const orderDetails = useSelector((state) => state.orderDetails)
     const { order, loading, error } = orderDetails
-
+    
     useEffect(() => {
         dispatch(getOrderDetails(orderId))
     }, [orderId, dispatch])
@@ -89,7 +88,7 @@ function OrderScreen() {
                                 </Message>
                             ) : (
                                 <Message variant='warning'>
-                                    Delivered at {order.deliveredAt}
+                                    Delivering
                                 </Message>
                             )}
                         </ListGroup.Item>
@@ -127,4 +126,4 @@ function OrderScreen() {
     )
 }
 
-export default OrderScreen
+export default OrderDetailsScreen
