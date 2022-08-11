@@ -1,5 +1,6 @@
 import asyncHandler from 'express-async-handler'
 import Order from '../models/orderModel.js'
+import User from '../models/userModel.js'
 
 // @desc    Create new order
 // @route   POST /api/orders
@@ -39,4 +40,35 @@ const getOrderById = asyncHandler(async function (req, res) {
     }
 })
 
-export { addOrderItems, getOrderById }
+// @desc    Update order to paid
+// @route   PUT /api/orders/:id/pay
+// @access  Private
+const updateOrderToPaid = asyncHandler(async function (req, res) {
+    const user = await User.findById(req.user._id)
+
+    if(user.isAdmin) {
+        const order = await Order.findById(req.params.id)
+        if (order) {
+            order.isPaid = true
+            order.paidAt = Date.now()
+
+            const updateOrder = await order.save()
+            res.json(updateOrder)
+        } else {
+            res.status(404)
+            throw new Error('Order not found')
+        }
+    } else {
+        res.status(401)
+        throw new Error('You are not allowed to update')
+    }
+})
+
+// @desc    Get logged in user orders
+// @route   PUT /api/orders/myorders
+// @access  Private
+const getLoggedInOrder = asyncHandler(async function (req, res) {
+    const order = await Order.findById(req.params.id)
+})
+
+export { addOrderItems, getOrderById, updateOrderToPaid, getLoggedInOrder }
