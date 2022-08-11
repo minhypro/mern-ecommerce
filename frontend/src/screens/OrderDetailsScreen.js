@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { getOrderDetails } from '../actions/orderActions'
+import { PAYMENT_METHOD } from '../constants/cartConstansts'
 
 function OrderDetailsScreen() {
     const dispatch = useDispatch()
@@ -24,37 +25,37 @@ function OrderDetailsScreen() {
         <Message variant='danger'>{error}</Message>
     ) : (
         <>
-            <h1>Order {order._id}</h1>
+            <h1>Đơn hàng {order._id}</h1>
             <Row>
                 <Col md={8}>
                     <ListGroup variant='flush'>
                         <ListGroup.Item>
-                            <h2>Shipping</h2>
+                            <h2>Thông tin nhận hàng</h2>
                             <p>
-                                <strong>Name: </strong> {order.user.name}
+                                <strong>Tên: </strong> {order.user.name}
                             </p>
                             <p>
-                                <strong>Address: </strong>
+                                <strong>Địa chỉ: </strong>
                                 {order.shippingAddress.address}, {order.shippingAddress.city},{' '}
                                 {order.shippingAddress.country}
                             </p>
                         </ListGroup.Item>
 
                         <ListGroup.Item>
-                            <h2>Payment Method</h2>
+                            <h2>Thanh toán</h2>
                             <p>
-                                <strong>Method: </strong>
-                                {order.paymentMethod}
+                                <strong>Phương thức: </strong>
+                                {PAYMENT_METHOD[order.paymentMethod]}
                             </p>
                             {order.isPaid ? (
-                                <Message variant='success'>Paid at {order.paidAt}</Message>
+                                <Message variant='success'>Thanh toán vào lúc {order.paidAt}</Message>
                             ) : (
-                                <Message variant='danger'>Pending Payment</Message>
+                                <Message variant='primary'>Chưa thanh toán</Message>
                             )}
                         </ListGroup.Item>
 
                         <ListGroup.Item>
-                            <h2>Order Items</h2>
+                            <h2>Sản phẩm</h2>
                             <ListGroup variant='flush'>
                                 {order.orderItems.map((item, index) => (
                                     <ListGroup.Item key={index}>
@@ -81,14 +82,12 @@ function OrderDetailsScreen() {
                                     </ListGroup.Item>
                                 ))}
                             </ListGroup>
-                            {!order.isPaid ? (
-                                false
-                            ) : order.isDelivery ? (
+                            {order.isDelivery ? (
                                 <Message variant='success'>
-                                    Delivered at {order.deliveredAt}
+                                    Đã giao vào lúc {order.deliveredAt}
                                 </Message>
                             ) : (
-                                <Message variant='warning'>Delivering</Message>
+                                <Message variant='warning'>Đang giao</Message>
                             )}
                         </ListGroup.Item>
                     </ListGroup>
@@ -97,11 +96,11 @@ function OrderDetailsScreen() {
                     <Card>
                         <ListGroup variant='flush'>
                             <ListGroup.Item>
-                                <h2>Order Summary</h2>
+                                <h2>Tổng kết</h2>
                             </ListGroup.Item>
                             <ListGroup.Item>
                                 <Row>
-                                    <Col>Price</Col>
+                                    <Col>Tiền hàng</Col>
                                     <Col>
                                         {order.totalPrice}
                                         <sup>₫</sup>
@@ -110,7 +109,7 @@ function OrderDetailsScreen() {
                             </ListGroup.Item>
                             <ListGroup.Item>
                                 <Row>
-                                    <Col>Shipping</Col>
+                                    <Col>Phí vận chuyển</Col>
                                     <Col>
                                         {order.shippingPrice}
                                         <sup>₫</sup>
@@ -119,7 +118,7 @@ function OrderDetailsScreen() {
                             </ListGroup.Item>
                             <ListGroup.Item>
                                 <Row>
-                                    <Col>Total</Col>
+                                    <Col>Tổng cộng</Col>
                                     <Col>
                                         {order.totalPrice}
                                         <sup>₫</sup>

@@ -16,10 +16,10 @@ function PaymentScreen() {
         navigate('/shipping')
     }
 
-    const [paymentMethod, setSetPaymentMethod] = useState(null)
+    const [paymentMethod, setPaymentMethod] = useState(null)
 
     useEffect(() => {
-        setSetPaymentMethod(cart.paymentMethod)
+        setPaymentMethod(cart.paymentMethod)
     }, [cart])
 
     const submitHandler = (e) => {
@@ -46,7 +46,7 @@ function PaymentScreen() {
                             id='cod'
                             name='paymentMethod'
                             value='cod'
-                            onChange={(e) => setSetPaymentMethod(e.target.value)}
+                            onChange={(e) => setPaymentMethod(e.target.value)}
                         ></Form.Check>
                         <Form.Check
                             checked={paymentMethod === 'bankTransfer'}
@@ -55,7 +55,7 @@ function PaymentScreen() {
                             id='bank_transfer'
                             name='paymentMethod'
                             value='bankTransfer'
-                            onChange={(e) => setSetPaymentMethod(e.target.value)}
+                            onChange={(e) => setPaymentMethod(e.target.value)}
                         ></Form.Check>
                     </Col>
                 </Form.Group>
