@@ -33,13 +33,13 @@ function ShippingScreen() {
     return (
         <FormContainer>
             <CheckoutStep step={stepCount} />
-            <h1>Shipping</h1>
+            <h1>Thông tin đặt hàng</h1>
             <Form onSubmit={submitHandler}>
                 <Form.Group controlId='address'>
-                    <Form.Label>Address</Form.Label>
+                    <Form.Label>Địa chỉ</Form.Label>
                     <Form.Control
                         type='text'
-                        placeholder='Enter Address'
+                        placeholder='Nhập địa chỉ'
                         value={address}
                         required
                         onChange={(e) => setAddress(e.target.value)}
@@ -47,10 +47,10 @@ function ShippingScreen() {
                 </Form.Group>
 
                 <Form.Group controlId='city'>
-                    <Form.Label>City</Form.Label>
+                    <Form.Label>Thành phố</Form.Label>
                     <Form.Control
                         type='text'
-                        placeholder='Enter City'
+                        placeholder='Nhập thành phố'
                         value={city}
                         required
                         onChange={(e) => setCity(e.target.value)}
@@ -58,10 +58,10 @@ function ShippingScreen() {
                 </Form.Group>
 
                 <Form.Group controlId='country'>
-                    <Form.Label>Country</Form.Label>
+                    <Form.Label>Quốc gia</Form.Label>
                     <Form.Control
                         type='text'
-                        placeholder='Enter Country'
+                        placeholder='Nhập quốc gia'
                         value={country}
                         required
                         onChange={(e) => setCountry(e.target.value)}
@@ -69,7 +69,7 @@ function ShippingScreen() {
                 </Form.Group>
 
                 <Button type='submit' variant='primary'>
-                    Continue
+                    Tiếp tục
                 </Button>
             </Form>
         </FormContainer>

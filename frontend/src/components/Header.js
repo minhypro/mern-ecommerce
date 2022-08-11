@@ -24,22 +24,22 @@ function Header() {
                         <Nav className='ms-auto'>
                             <LinkContainer to='/cart'>
                                 <Nav.Link>
-                                    <i className='fas fa-shopping-cart'></i> Cart
+                                    <i className='fas fa-shopping-cart'></i> Giỏ hàng
                                 </Nav.Link>
                             </LinkContainer>
                             {userInfo && Object.keys(userInfo).length !== 0 ? (
                                 <NavDropdown title={userInfo.name} id='username'>
                                     <LinkContainer to='/profile'>
-                                        <NavDropdown.Item>Profile</NavDropdown.Item>
+                                        <NavDropdown.Item>Tài khoản</NavDropdown.Item>
                                     </LinkContainer>
                                     <NavDropdown.Item onClick={logoutHandler}>
-                                        Logout
+                                        Đăng xuất
                                     </NavDropdown.Item>
                                 </NavDropdown>
                             ) : (
                                 <LinkContainer to='/login'>
                                     <Nav.Link>
-                                        <i className='fas fa-user'></i> Sign In
+                                        <i className='fas fa-user'></i> Đăng nhập
                                     </Nav.Link>
                                 </LinkContainer>
                             )}

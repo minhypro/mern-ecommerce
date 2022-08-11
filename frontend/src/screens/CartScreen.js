@@ -41,10 +41,10 @@ function CartScreen() {
         <Row>
             <CheckoutStep step={stepCount} />
             <Col md={8}>
-                <h1>Shopping Cart</h1>
+                <h1>Giỏ hàng</h1>
                 {cartItems.length === 0 ? (
                     <Message>
-                        Your shopping cart is empty <Link to='/'>Go back</Link>
+                        Giỏ hàng của bạn còn trống <Link to='/'>Trở về</Link>
                     </Message>
                 ) : (
                     <ListGroup md={6}>
@@ -59,10 +59,13 @@ function CartScreen() {
                                             <strong>{item.name}</strong>
                                         </Link>
                                     </Col>
-                                    <Col md={2}>${item.price}</Col>
+                                    <Col md={2}>
+                                        {item.price}
+                                        <sup>₫</sup>
+                                    </Col>
                                     <Col md={2}>
                                         <Form>
-                                            <Form.Label>Quantity: </Form.Label>
+                                            <Form.Label>Số Lượng: </Form.Label>
                                             <Form.Control
                                                 type='number'
                                                 min='1'
@@ -99,13 +102,13 @@ function CartScreen() {
                     <ListGroup variant='flush'>
                         <ListGroup.Item>
                             <h2>
-                                Subtotal: ({cartItems.reduce((acc, item) => acc + item.qty, 0)})
-                                items
+                                Tạm tính: ({cartItems.reduce((acc, item) => acc + item.qty, 0)}) sản
+                                phẩm
                             </h2>
-                            $
                             {cartItems
                                 .reduce((acc, item) => acc + item.qty * item.price, 0)
                                 .toFixed(2)}
+                            <sup>₫</sup>
                         </ListGroup.Item>
                         <ListGroup.Item>
                             <Button
@@ -114,7 +117,7 @@ function CartScreen() {
                                 disabled={cartItems.length === 0}
                                 onClick={checkoutHandler}
                             >
-                                Process to Checkout
+                                Mua hàng
                             </Button>
                         </ListGroup.Item>
                     </ListGroup>

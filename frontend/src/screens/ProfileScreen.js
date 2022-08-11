@@ -61,18 +61,18 @@ function ProfileScreen() {
     return (
         <Row>
             <Col md={4}>
-                <h2>Sign In</h2>
+                <h2>Thông tin tài khoản</h2>
                 {errorMessage && <Message variant='danger'>{errorMessage}</Message>}
                 {message && <Message variant='danger'>{message}</Message>}
-                {success && <Message variant='success'>Update sucessfully</Message>}
+                {success && <Message variant='success'>Cập nhật thông tin thành công</Message>}
                 {loading && <Loader />}
                 <Form onSubmit={submitHandler}>
                     <Form.Group controlId='name'>
-                        <Form.Label>Name</Form.Label>
+                        <Form.Label>Tên</Form.Label>
                         <Form.Control
                             disabled={disableEdit}
                             type='text'
-                            placeholder='Enter name'
+                            placeholder='Nhập name'
                             value={name}
                             required
                             onChange={(e) => setName(e.target.value)}
@@ -80,11 +80,11 @@ function ProfileScreen() {
                     </Form.Group>
 
                     <Form.Group controlId='email'>
-                        <Form.Label>Email Address</Form.Label>
+                        <Form.Label>Email</Form.Label>
                         <Form.Control
                             disabled
                             type='email'
-                            placeholder='Enter email'
+                            placeholder='Nhập email'
                             value={email}
                             required
                             onChange={(e) => setEmail(e.target.value)}
@@ -93,37 +93,37 @@ function ProfileScreen() {
                     <hr></hr>
 
                     <Form.Group controlId='password'>
-                        <Form.Label>Password</Form.Label>
+                        <Form.Label>Mật khẩu</Form.Label>
                         <Form.Control
                             disabled={disableEdit}
                             type='password'
-                            placeholder='Enter Password'
+                            placeholder='Nhập mật khẩu'
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </Form.Group>
                     <Form.Group controlId='confirm-password'>
-                        <Form.Label>Confirm Password</Form.Label>
+                        <Form.Label>Xác nhận mật khẩu</Form.Label>
                         <Form.Control
                             disabled={disableEdit}
                             type='password'
-                            placeholder='Confirm Password'
+                            placeholder='Xác nhận mật khẩu'
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
                         />
                     </Form.Group>
 
                     <Button type='submit' variant='primary' disabled={disableEdit}>
-                        Update
+                        Xác nhận
                     </Button>
 
                     <Button type='button' variant='primary' onClick={allowEdit}>
-                        Edit
+                        Chỉnh sửa
                     </Button>
                 </Form>
             </Col>
             <Col md={8}>
-                <h2>My Orders</h2>
+                <h2>Danh sách đơn hàng</h2>
             </Col>
         </Row>
     )

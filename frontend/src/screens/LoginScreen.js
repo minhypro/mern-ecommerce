@@ -35,15 +35,15 @@ function LoginScreen() {
 
     return (
         <FormContainer>
-            <h1>Sign In</h1>
+            <h1>Đăng nhập</h1>
             {errorMessage && <Message variant='danger'>{errorMessage}</Message>}
             {loading && <Loader />}
             <Form onSubmit={submitHandler}>
                 <Form.Group controlId='email'>
-                    <Form.Label>Email Address</Form.Label>
+                    <Form.Label>Email</Form.Label>
                     <Form.Control
                         type='email'
-                        placeholder='Enter email'
+                        placeholder='Nhập email'
                         value={email}
                         required
                         onChange={(e) => setEmail(e.target.value)}
@@ -51,10 +51,10 @@ function LoginScreen() {
                 </Form.Group>
 
                 <Form.Group controlId='password'>
-                    <Form.Label>Password</Form.Label>
+                    <Form.Label>Mật khẩu</Form.Label>
                     <Form.Control
                         type='password'
-                        placeholder='Enter Password'
+                        placeholder='Nhập Password'
                         value={password}
                         required
                         onChange={(e) => setPassword(e.target.value)}
@@ -62,15 +62,15 @@ function LoginScreen() {
                 </Form.Group>
 
                 <Button type='submit' variant='primary'>
-                    Sign In
+                    Đăng nhập
                 </Button>
             </Form>
 
             <Row className='py-3'>
                 <Col>
-                    New Cusomter?{' '}
+                    Chưa có tài khoản?{' '}
                     <Link to={redirect !== '/' ? `/register?redirect=${redirect}` : '/register'}>
-                        Register here
+                        Đăng kí
                     </Link>
                 </Col>
             </Row>

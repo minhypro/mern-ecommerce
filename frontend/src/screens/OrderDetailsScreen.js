@@ -10,10 +10,10 @@ function OrderDetailsScreen() {
     const dispatch = useDispatch()
     const params = useParams()
     const orderId = params.id
-    
+
     const orderDetails = useSelector((state) => state.orderDetails)
     const { order, loading, error } = orderDetails
-    
+
     useEffect(() => {
         dispatch(getOrderDetails(orderId))
     }, [orderId, dispatch])
@@ -73,8 +73,9 @@ function OrderDetailsScreen() {
                                                 </Link>
                                             </Col>
                                             <Col md={4} align='end'>
-                                                {item.qty} x ${item.price} = $
-                                                {item.price * item.qty}
+                                                {item.qty} x {item.price}
+                                                <sup>₫</sup> ={item.price * item.qty}
+                                                <sup>₫</sup>
                                             </Col>
                                         </Row>
                                     </ListGroup.Item>
@@ -87,9 +88,7 @@ function OrderDetailsScreen() {
                                     Delivered at {order.deliveredAt}
                                 </Message>
                             ) : (
-                                <Message variant='warning'>
-                                    Delivering
-                                </Message>
+                                <Message variant='warning'>Delivering</Message>
                             )}
                         </ListGroup.Item>
                     </ListGroup>
@@ -103,19 +102,28 @@ function OrderDetailsScreen() {
                             <ListGroup.Item>
                                 <Row>
                                     <Col>Price</Col>
-                                    <Col>${order.totalPrice}</Col>
+                                    <Col>
+                                        {order.totalPrice}
+                                        <sup>₫</sup>
+                                    </Col>
                                 </Row>
                             </ListGroup.Item>
                             <ListGroup.Item>
                                 <Row>
                                     <Col>Shipping</Col>
-                                    <Col>${order.shippingPrice}</Col>
+                                    <Col>
+                                        {order.shippingPrice}
+                                        <sup>₫</sup>
+                                    </Col>
                                 </Row>
                             </ListGroup.Item>
                             <ListGroup.Item>
                                 <Row>
                                     <Col>Total</Col>
-                                    <Col>${order.totalPrice}</Col>
+                                    <Col>
+                                        {order.totalPrice}
+                                        <sup>₫</sup>
+                                    </Col>
                                 </Row>
                             </ListGroup.Item>
                         </ListGroup>

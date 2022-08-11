@@ -13,7 +13,7 @@ function Loader() {
                 display: 'block'
 
             }} >
-            <span className='visually-hidden' >Loading...</span>
+            <span className='visually-hidden' >Đang tải...</span>
         </Spinner>
     )
 }

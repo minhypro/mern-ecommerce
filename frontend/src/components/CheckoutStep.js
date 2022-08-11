@@ -11,40 +11,40 @@ function CheckoutStep({ step }) {
             <Nav.Item className={location.pathname === '/cart'? 'active': ''}>
                 {step >= 1 ? (
                     <LinkContainer to='/cart'>
-                        <Nav.Link>Shopping</Nav.Link>
+                        <Nav.Link>Mua sắm</Nav.Link>
                     </LinkContainer>
                 ) : (
-                    <Nav.Link disabled>Shopping</Nav.Link>
+                    <Nav.Link disabled>Mua sắm</Nav.Link>
                 )}
             </Nav.Item>
 
             <Nav.Item className={location.pathname === '/shipping'? 'active': ''} >
                 {step >= 2 ? (
                     <LinkContainer to='/shipping'>
-                        <Nav.Link>Shipping</Nav.Link>
+                        <Nav.Link>Địa chỉ</Nav.Link>
                     </LinkContainer>
                 ) : (
-                    <Nav.Link disabled>Shipping</Nav.Link>
+                    <Nav.Link disabled>Địa chỉ</Nav.Link>
                 )}
             </Nav.Item>
 
             <Nav.Item className={location.pathname === '/payment'? 'active': ''}>
                 {step >= 3 ? (
                     <LinkContainer to='/payment'>
-                        <Nav.Link>Payment</Nav.Link>
+                        <Nav.Link>Thanh toán</Nav.Link>
                     </LinkContainer>
                 ) : (
-                    <Nav.Link disabled>Payment</Nav.Link>
+                    <Nav.Link disabled>Thanh toán</Nav.Link>
                 )}
             </Nav.Item>
 
             <Nav.Item className={location.pathname === '/placeorder'? 'active': ''}>
                 {step >= 4 ? (
                     <LinkContainer to='/placeorder'>
-                        <Nav.Link>Place Order</Nav.Link>
+                        <Nav.Link>Đặt hàng</Nav.Link>
                     </LinkContainer>
                 ) : (
-                    <Nav.Link disabled>Place Order</Nav.Link>
+                    <Nav.Link disabled>Đặt hàng</Nav.Link>
                 )}
             </Nav.Item>
         </Nav>

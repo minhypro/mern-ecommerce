@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
@@ -20,26 +20,33 @@ function PlaceOrderScreen() {
             ? 0
             : Number((cart.itemsPrice * SHIPPING_PRICE).toFixed(2))
     cart.totalPrice = Number((cart.itemsPrice + cart.shippingPrice).toFixed(2))
-        
+
     const orderCreate = useSelector((state) => state.orderCreate)
-    const {order, success, error} = orderCreate
+    const { order, success, error } = orderCreate
 
     useEffect(() => {
-        if(success) {
+        if (success) {
             navigate(`/order/${order._id}`)
         }
         // eslint-disable-next-line
-    },[navigate, success])
+    }, [navigate, success])
 
     const placeOrderHandler = () => {
-        dispatch(createOrder({
-            orderItems: cart.cartItems,
-            shippingAddress: cart.shippingAddress,
-            paymentMethod: cart.paymentMethod,
-            itemsPrice: cart.itemsPrice,
-            shippingPrice: cart.shippingPrice,
-            totalPrice: cart.totalPrice,
-        }))
+        dispatch(
+            createOrder({
+                orderItems: cart.cartItems,
+                shippingAddress: cart.shippingAddress,
+                paymentMethod: cart.paymentMethod,
+                itemsPrice: cart.itemsPrice,
+                shippingPrice: cart.shippingPrice,
+                totalPrice: cart.totalPrice,
+            })
+        )
+    }
+
+    const PAYMENT_METHOD = {
+        cod: 'Thanh toán khi nhận hàng',
+        bankTransfer: 'Chuyển khoản',
     }
 
     return (
@@ -49,26 +56,26 @@ function PlaceOrderScreen() {
                 <Col md={8}>
                     <ListGroup variant='flush'>
                         <ListGroup.Item>
-                            <h2>Shipping</h2>
+                            <h2>Thông tin nhận hàng</h2>
                             <p>
-                                <strong>Address: </strong>
+                                <strong>Địa chỉ: </strong>
                                 {cart.shippingAddress.address}, {cart.shippingAddress.city},{' '}
                                 {cart.shippingAddress.country}
                             </p>
                         </ListGroup.Item>
 
                         <ListGroup.Item>
-                            <h2>Payment Method</h2>
+                            <h2>Thanh toán</h2>
                             <p>
-                                <strong>Method: </strong>
-                                {cart.paymentMethod}
+                                <strong>Phương thức: </strong>
+                                {PAYMENT_METHOD[cart.paymentMethod]}
                             </p>
                         </ListGroup.Item>
 
                         <ListGroup.Item>
-                            <h2>Orer Items</h2>
+                            <h2>Sản phẩm</h2>
                             {cart.cartItems.length === 0 ? (
-                                <Message>Your cart is empty</Message>
+                                <Message variant='danger'>Giỏ hàng của bạn còn trống</Message>
                             ) : (
                                 <ListGroup variant='flush'>
                                     {cart.cartItems.map((item, index) => (
@@ -88,8 +95,9 @@ function PlaceOrderScreen() {
                                                     </Link>
                                                 </Col>
                                                 <Col md={4} align='end'>
-                                                    {item.qty} x ${item.price} = $
-                                                    {item.price * item.qty}
+                                                    {item.qty} x{item.price}
+                                                    <sup>₫</sup> ={item.price * item.qty}
+                                                    <sup>₫</sup>
                                                 </Col>
                                             </Row>
                                         </ListGroup.Item>
@@ -103,39 +111,48 @@ function PlaceOrderScreen() {
                     <Card>
                         <ListGroup variant='flush'>
                             <ListGroup.Item>
-                                <h2>Order Summary</h2>
+                                <h2>Thành tiền</h2>
                             </ListGroup.Item>
                             <ListGroup.Item>
                                 <Row>
-                                    <Col>Items</Col>
-                                    <Col>${cart.itemsPrice}</Col>
+                                    <Col>Tiền hàng</Col>
+                                    <Col>
+                                        {cart.itemsPrice}
+                                        <sup>₫</sup>
+                                    </Col>
                                 </Row>
                             </ListGroup.Item>
                             <ListGroup.Item>
                                 <Row>
-                                    <Col>Shipping</Col>
-                                    <Col>${cart.shippingPrice}</Col>
+                                    <Col>Phí vận chuyển</Col>
+                                    <Col>
+                                        {cart.shippingPrice}
+                                        <sup>₫</sup>
+                                    </Col>
                                 </Row>
                                 <Row>
                                     {cart.shippingPrice === 0 ? (
                                         false
                                     ) : (
                                         <Col className='text-danger'>
-                                            Buy $
+                                            Mua thêm{' '}
                                             {Number((FREE_SHIP_PRICE - cart.itemsPrice).toFixed(2))}{' '}
-                                            more to get free ship
+                                            để được miễn phí vận chuyển
                                         </Col>
                                     )}
                                 </Row>
                             </ListGroup.Item>
                             <ListGroup.Item>
                                 <Row>
-                                    <Col>Total</Col>
-                                    <Col>${cart.totalPrice}</Col>
+                                    <Col>Tổng cộng</Col>
+                                    <Col>
+                                        {cart.totalPrice}
+                                        <sup>₫</sup>
+                                    </Col>
                                 </Row>
                             </ListGroup.Item>
                             <ListGroup.Item>
-                                {error && <Message variant="danger">{error}</Message>}
+                                {error && <Message variant='danger'>{error}</Message>}
                             </ListGroup.Item>
                             <ListGroup.Item>
                                 <Button
@@ -144,7 +161,7 @@ function PlaceOrderScreen() {
                                     disabled={cart.cartItems === 0}
                                     onClick={placeOrderHandler}
                                 >
-                                    Place Order
+                                    Đặt hàng
                                 </Button>
                             </ListGroup.Item>
                         </ListGroup>

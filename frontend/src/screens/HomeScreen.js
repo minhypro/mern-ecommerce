@@ -18,7 +18,7 @@ function HomeScreen() {
 
     return (
         <>
-            <h1>Latest Products</h1>
+            <h1>Danh sách sản phẩm</h1>
             {loading ? (
                 <Loader />
             ) : error ? (

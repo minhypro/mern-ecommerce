@@ -33,35 +33,25 @@ function PaymentScreen() {
     return (
         <FormContainer>
             <CheckoutStep step={stepCount} />
-            <h1>Payment Method</h1>
+            <h1>Phương thức thanh toán</h1>
             <Form onSubmit={submitHandler}>
                 <Form.Group>
-                    <Form.Label as='legend'>Select Method</Form.Label>
+                    <Form.Label as='legend'>Chọn phương thức</Form.Label>
 
                     <Col>
                         <Form.Check
-                            required
-                            checked={paymentMethod === 'paypal'}
+                            checked={paymentMethod === 'cod'}
                             type='radio'
-                            label='PayPal or Credit Card'
-                            id='paypal'
+                            label='Thanh toán khi nhận hàng'
+                            id='cod'
                             name='paymentMethod'
-                            value='paypal'
-                            onChange={(e) => setSetPaymentMethod(e.target.value)}
-                        ></Form.Check>
-                        <Form.Check
-                            checked={paymentMethod === 'stripe'}
-                            type='radio'
-                            label='Stripe'
-                            id='stripe'
-                            name='paymentMethod'
-                            value='stripe'
+                            value='cod'
                             onChange={(e) => setSetPaymentMethod(e.target.value)}
                         ></Form.Check>
                         <Form.Check
                             checked={paymentMethod === 'bankTransfer'}
                             type='radio'
-                            label='Bank Transfer'
+                            label='Chuyển khoản'
                             id='bank_transfer'
                             name='paymentMethod'
                             value='bankTransfer'
@@ -71,7 +61,7 @@ function PaymentScreen() {
                 </Form.Group>
 
                 <Button type='submit' variant='primary'>
-                    Continue
+                    Tiếp tục
                 </Button>
             </Form>
         </FormContainer>

@@ -42,16 +42,16 @@ function RegisterScreen() {
 
     return (
         <FormContainer>
-            <h1>Sign In</h1>
+            <h1>Đăng kí</h1>
             {errorMessage && <Message variant='danger'>{errorMessage}</Message>}
             {message && <Message variant='danger'>{message}</Message>}
             {loading && <Loader />}
             <Form onSubmit={submitHandler}>
                 <Form.Group controlId='name'>
-                    <Form.Label>Name</Form.Label>
+                    <Form.Label>Tên</Form.Label>
                     <Form.Control
                         type='text'
-                        placeholder='Enter name'
+                        placeholder='Nhập name'
                         value={name}
                         required
                         onChange={(e) => setName(e.target.value)}
@@ -59,10 +59,10 @@ function RegisterScreen() {
                 </Form.Group>
 
                 <Form.Group controlId='email'>
-                    <Form.Label>Email Address</Form.Label>
+                    <Form.Label>Email</Form.Label>
                     <Form.Control
                         type='email'
-                        placeholder='Enter email'
+                        placeholder='Nhập email'
                         value={email}
                         required
                         onChange={(e) => setEmail(e.target.value)}
@@ -70,10 +70,10 @@ function RegisterScreen() {
                 </Form.Group>
 
                 <Form.Group controlId='password'>
-                    <Form.Label>Password</Form.Label>
+                    <Form.Label>Mật khẩu</Form.Label>
                     <Form.Control
                         type='password'
-                        placeholder='Enter Password'
+                        placeholder='Nhập Password'
                         value={password}
                         required
                         onChange={(e) => setPassword(e.target.value)}
@@ -81,7 +81,7 @@ function RegisterScreen() {
                 </Form.Group>
 
                 <Form.Group controlId='confirm-password'>
-                    <Form.Label>Confirm Password</Form.Label>
+                    <Form.Label>Xác nhận mật khẩu</Form.Label>
                     <Form.Control
                         type='password'
                         placeholder='Confirm Password'
@@ -92,15 +92,15 @@ function RegisterScreen() {
                 </Form.Group>
 
                 <Button type='submit' variant='primary'>
-                    Sign Up
+                    Đăng kí
                 </Button>
             </Form>
 
             <Row className='py-3'>
                 <Col>
-                    Already have an account?{' '}
+                    Đã có tài khoản?{' '}
                     <Link to={redirect !== '/' ? `/login?redirect=${redirect}` : '/login'}>
-                        Login
+                        Đăng nhập
                     </Link>
                 </Col>
             </Row>
