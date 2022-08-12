@@ -5,6 +5,9 @@ import {
     ORDER_DETAILS_REQUEST,
     ORDER_DETAILS_SUCCESS,
     ORDER_DETAILS_FAIL,
+    MY_ORDER_LIST_REQUEST,
+    MY_ORDER_LIST_SUCCESS,
+    MY_ORDER_LIST_FAIL,
 } from '../constants/orderConstants'
 import ordersApi from '../api/ordersApi'
 
@@ -49,6 +52,29 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
     } catch (err) {
         dispatch({
             type: ORDER_DETAILS_FAIL,
+            payload: err,
+        })
+    }
+}
+
+export const listMyOrders = () => async (dispatch, getState) => {
+    try {
+        dispatch({
+            type: MY_ORDER_LIST_REQUEST,
+        })
+
+        const {
+            userLogin: { userInfo },
+        } = getState()
+        const data = await ordersApi.listMyOrders(userInfo.token)
+
+        dispatch({
+            type: MY_ORDER_LIST_SUCCESS,
+            payload: data,
+        })
+    } catch (err) {
+        dispatch({
+            type: MY_ORDER_LIST_FAIL,
             payload: err,
         })
     }
