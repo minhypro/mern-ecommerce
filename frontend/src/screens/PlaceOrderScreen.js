@@ -158,7 +158,7 @@ function PlaceOrderScreen() {
                                 <Button
                                     type='button'
                                     className='btn-block'
-                                    disabled={cart.cartItems === 0}
+                                    disabled={cart.cartItems.length === 0}
                                     onClick={placeOrderHandler}
                                 >
                                     Đặt hàng
