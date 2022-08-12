@@ -9,10 +9,13 @@ import {
     USER_DETAILS_REQUEST,
     USER_DETAILS_SUCCESS,
     USER_DETAILS_FAIL,
+    USER_DETAILS_RESET,
     USER_UPDATE_PROFILE_REQUEST,
     USER_UPDATE_PROFILE_SUCCESS,
     USER_UPDATE_PROFILE_FAIL,
 } from '../constants/userConstants'
+import {MY_ORDER_LIST_RESET} from '../constants/orderConstants'
+import {CART_RESET_ITEM} from '../constants/cartConstants'
 import usersApi from '../api/usersApi'
 
 export const login = (email, password) => async (dispatch) => {
@@ -110,9 +113,11 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
     }
 }
 
-
 export const logout = () => (dispatch) => {
     localStorage.removeItem('userInfo')
     dispatch({ type: USER_LOGOUT })
+    dispatch({ type: USER_DETAILS_RESET })
+    dispatch({ type: MY_ORDER_LIST_RESET })
+    dispatch({ type: CART_RESET_ITEM })
 }
 

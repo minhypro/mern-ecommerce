@@ -28,6 +28,15 @@ const ordersApi = {
         }
         return axiosClient.get(`/api/orders/myorders`, config)
     },
+    orderSentpayment: (id, token) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + token,
+            },
+        }
+        return axiosClient.put(`/api/orders/${id}/sentpayment`, config)
+    },
 }
 
 export default ordersApi

@@ -8,6 +8,7 @@ import {
     MY_ORDER_LIST_REQUEST,
     MY_ORDER_LIST_SUCCESS,
     MY_ORDER_LIST_FAIL,
+    ORDER_CREATE_RESET,
 } from '../constants/orderConstants'
 import ordersApi from '../api/ordersApi'
 
@@ -32,6 +33,12 @@ export const createOrder = (order) => async (dispatch, getState) => {
             payload: err,
         })
     }
+}
+
+export const resetCreatedOrder = () => async (dispatch) => {
+    dispatch({
+        type: ORDER_CREATE_RESET,
+    })
 }
 
 export const getOrderDetails = (id) => async (dispatch, getState) => {
