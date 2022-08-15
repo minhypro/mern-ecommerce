@@ -26,8 +26,8 @@ function OrderDetailsScreen() {
   const closeModalHandler = () => setShow(false)
   const showModalHandler = () => setShow(true)
 
-  const paymentHandler = () => {
-    ordersApi.orderSentpayment(orderId, userLogin.userInfo.token)
+  const paymentHandler = async () => {
+    await ordersApi.orderSentpayment(orderId, userLogin.userInfo.token)
     dispatch(getOrderDetails(orderId))
     setShow(false)
   }

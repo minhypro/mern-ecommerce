@@ -6,7 +6,7 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { getUserDetails, updateUserProfile } from '../actions/userActions'
 import { listMyOrders } from '../actions/orderActions'
-import {LinkContainer} from 'react-router-bootstrap'
+import { LinkContainer } from 'react-router-bootstrap'
 
 function ProfileScreen() {
   const navigate = useNavigate()
@@ -62,6 +62,10 @@ function ProfileScreen() {
   const allowEdit = (e) => {
     e.preventDefault()
     setDisableEdit((prev) => !prev)
+  }
+
+  const reloadOrderList = () => {
+    dispatch(listMyOrders())
   }
 
   return (
@@ -129,7 +133,14 @@ function ProfileScreen() {
         </Form>
       </Col>
       <Col md={9}>
-        <h2>Danh sách đơn hàng</h2>
+        <Row className='justify-content-between'>
+          <Col md={11}>
+            <h2>Danh sách đơn hàng</h2>
+          </Col>
+          <Col md={1} className='d-flex justify-content-end align-items-center'>
+            <i class='fa-solid fa-rotate' role='button' onClick={reloadOrderList}></i>
+          </Col>
+        </Row>
         {orderLoading ? (
           <Loader />
         ) : orderError ? (
@@ -155,11 +166,21 @@ function ProfileScreen() {
                     {order.totalPrice}
                     <sup>đ</sup>
                   </td>
-                  <td>{order.isPaid ? order.paidAt : 'Chưa thanh toán'}</td>
+                  <td>
+                    {order.paymentMethod === 'cod'
+                      ? 'Thanh toán khi nhận hàng'
+                      : order.isPaid
+                      ? order.paidAt
+                      : order.isSentPayment
+                      ? 'Đã chuyển khoản'
+                      : 'Chưa thanh toán'}
+                  </td>
                   <td>{order.isDelivery ? order.deliveredAt : 'Đang giao'}</td>
                   <td>
-                    <LinkContainer to={`/order/${order._id}`} >
-                      <Button variant='light' className='btn-sm' >Xem thêm</Button>
+                    <LinkContainer to={`/order/${order._id}`}>
+                      <Button variant='light' className='btn-sm'>
+                        Xem thêm
+                      </Button>
                     </LinkContainer>
                   </td>
                 </tr>
