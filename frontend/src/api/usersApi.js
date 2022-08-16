@@ -41,6 +41,15 @@ const usersApi = {
     }
     return axiosClient.get(`/api/users/`, config)
   },
+  deleteUser: (id, token) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token,
+      },
+    }
+    return axiosClient.delete(`/api/users/${id}/delete`, config)
+  },
 }
 
 export default usersApi

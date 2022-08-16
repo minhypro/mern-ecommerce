@@ -1,18 +1,19 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { LinkContainer } from 'react-router-bootstrap'
-import { Table, Button } from 'react-bootstrap'
+import { Table, Button, Modal } from 'react-bootstrap'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import { listUsers } from '../actions/userActions'
+import { listUsers, deleteUser, logout } from '../actions/userActions'
 
 function UserListScreen() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const userList = useSelector((state) => state.userList)
   const { loading, error, users } = userList
-  const {userInfo} = useSelector((state) => state.userLogin)
+  const { userInfo } = useSelector((state) => state.userLogin)
+  const { success: deleteSuccess } = useSelector((state) => state.userDelete)
 
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {
@@ -20,28 +21,55 @@ function UserListScreen() {
     } else {
       navigate('/login')
     }
-  }, [dispatch, userInfo, navigate])
 
-  const deleteHandler = (id) => {
-    console.log('delete')
+    setDeleteAdminCount(0)
+  }, [dispatch, userInfo, navigate, deleteSuccess])
+
+  const [deleteAdminCount, setDeleteAdminCount] = useState(0)
+
+  const deleteHandler = (user) => {
+    
+    if (deleteAdminCount >= 3) {
+      dispatch(logout())
+    }
+
+    if (user.isAdmin) {
+      setShow(false)
+      setDeleteAdminCount(prev => prev + 1)
+    } else {
+      setShow(false)
+      dispatch(deleteUser(user._id))
+    }
+  }
+
+  const [selectedUser, setSelectedUser] = useState({})
+  const [show, setShow] = useState(false)
+
+  const closeModalHandler = () => setShow(false)
+  const confirmDeleteUser = (user) => {
+    setShow(true)
+    setSelectedUser(user)
   }
 
   return (
     <>
-      <h1>Users</h1>
+      <h1>Danh sách tài khoản</h1>
+      {deleteAdminCount === 1  && <Message variant='danger'>Không thể xóa tài khoản admin</Message>}
+      {deleteAdminCount > 1 && deleteAdminCount <= 2  && <Message variant='danger'>{`Không thể xóa tài khoản admin. Đừng có lì nha >.<`}</Message>}
+      {deleteAdminCount >= 3 && deleteAdminCount < 4  && <Message variant='danger'>{`Không thể xóa tài khoản admin. Một lần nữa là out nha bạn`}</Message>}
       {loading ? (
         <Loader />
       ) : error ? (
-        <Message value='danger'>{error}</Message>
+        <Message variant='danger'>{error}</Message>
       ) : (
         <Table striped bordered hover responsive className='table-sm'>
           <thead>
             <tr>
               <th>ID</th>
-              <th>Name</th>
+              <th>Tên</th>
               <th>Email</th>
-              <th>Role</th>
-              <th>Edit</th>
+              <th>Vai trò</th>
+              <th>Chỉnh sửa</th>
             </tr>
           </thead>
           <tbody>
@@ -60,7 +88,8 @@ function UserListScreen() {
                   <Button
                     variant='danger'
                     className='btn-sm'
-                    onClick={() => deleteHandler(user._id)}
+                    // disabled={user.isAdmin}
+                    onClick={() => confirmDeleteUser(user)}
                   >
                     <i className='fas fa-trash'></i>
                   </Button>
@@ -70,7 +99,24 @@ function UserListScreen() {
           </tbody>
         </Table>
       )}
-      {}
+      <Modal show={show} onHide={closeModalHandler} centered backdrop='static' keyboard={false}>
+        <Modal.Header closeButton>
+          <Modal.Title>Xác nhận xóa tài khoản</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>
+            Bạn có muốn xóa tài khoản <b>{selectedUser.name}</b> không?
+          </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant='secondary' onClick={closeModalHandler}>
+            Đóng
+          </Button>
+          <Button variant='primary' onClick={() => deleteHandler(selectedUser)}>
+            Xác nhận
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   )
 }

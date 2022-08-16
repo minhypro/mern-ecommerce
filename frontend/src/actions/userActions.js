@@ -17,6 +17,10 @@ import {
   USER_LIST_SUCCESS,
   USER_LIST_FAIL,
   USER_LIST_RESET,
+  USER_DELETE_REQUEST,
+  USER_DELETE_SUCCESS,
+  USER_DELETE_FAIL,
+  USER_REGISTER_RESET,
 } from '../constants/userConstants'
 import { MY_ORDER_LIST_RESET } from '../constants/orderConstants'
 import { CART_RESET_ITEM } from '../constants/cartConstants'
@@ -143,12 +147,36 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
   }
 }
 
+export const deleteUser = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: USER_DELETE_REQUEST,
+    })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const data = await usersApi.deleteUser(id, userInfo.token)
+
+    dispatch({
+      type: USER_DELETE_SUCCESS,
+      payload: data,
+    })
+  } catch (err) {
+    dispatch({
+      type: USER_DELETE_FAIL,
+      payload: err,
+    })
+  }
+}
+
 export const logout = () => (dispatch) => {
   localStorage.removeItem('userInfo')
-  dispatch({ type: USER_LOGOUT })
-  dispatch({ type: USER_DETAILS_RESET })
+  dispatch({ type: CART_RESET_ITEM })
   dispatch({ type: MY_ORDER_LIST_RESET })
-  dispatch({ type: CART_RESET_ITEM })
-  dispatch({ type: CART_RESET_ITEM })
+  dispatch({ type: USER_DETAILS_RESET })
+  dispatch({ type: USER_REGISTER_RESET })
   dispatch({ type: USER_LIST_RESET })
+  dispatch({ type: USER_LOGOUT })
 }
