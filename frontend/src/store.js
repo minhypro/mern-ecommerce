@@ -4,44 +4,50 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import { productListReducer, productDetailReducer } from './reducers/productReducers'
 import { cartReducer } from './reducers/cartReducers'
 import {
-    userLoginReducer,
-    userRegisterReducer,
-    userDetailsReducer,
-    userUpdateProfileReducer,
+  userLoginReducer,
+  userRegisterReducer,
+  userDetailsReducer,
+  userUpdateProfileReducer,
+  userListReducer,
 } from './reducers/userReducers'
-import { orderCreateReducer, orderDetailsReducer, myOrderListReducer } from './reducers/orderReducers'
+import {
+  orderCreateReducer,
+  orderDetailsReducer,
+  myOrderListReducer,
+} from './reducers/orderReducers'
 
 const reducer = combineReducers({
-    productList: productListReducer,
-    productDetails: productDetailReducer,
-    cart: cartReducer,
-    userLogin: userLoginReducer,
-    userRegister: userRegisterReducer,
-    userDetails: userDetailsReducer,
-    userUpdateProfile: userUpdateProfileReducer,
-    orderCreate: orderCreateReducer,
-    orderDetails: orderDetailsReducer,
-    myOrders: myOrderListReducer
+  productList: productListReducer,
+  productDetails: productDetailReducer,
+  cart: cartReducer,
+  userLogin: userLoginReducer,
+  userRegister: userRegisterReducer,
+  userDetails: userDetailsReducer,
+  userList: userListReducer,
+  userUpdateProfile: userUpdateProfileReducer,
+  orderCreate: orderCreateReducer,
+  orderDetails: orderDetailsReducer,
+  myOrders: myOrderListReducer,
 })
 
 const localStorageCartItems = localStorage.getItem('cartItems')
-    ? JSON.parse(localStorage.getItem('cartItems'))
-    : []
+  ? JSON.parse(localStorage.getItem('cartItems'))
+  : []
 
 const localStorageUserInfo = localStorage.getItem('userInfo')
-    ? JSON.parse(localStorage.getItem('userInfo'))
-    : {}
+  ? JSON.parse(localStorage.getItem('userInfo'))
+  : {}
 
 const localStorageShippingAddress = localStorage.getItem('shippingAddress')
-    ? JSON.parse(localStorage.getItem('shippingAddress'))
-    : {}
+  ? JSON.parse(localStorage.getItem('shippingAddress'))
+  : {}
 
 const initState = {
-    cart: {
-        cartItems: localStorageCartItems,
-        shippingAddress: localStorageShippingAddress,
-    },
-    userLogin: { userInfo: localStorageUserInfo },
+  cart: {
+    cartItems: localStorageCartItems,
+    shippingAddress: localStorageShippingAddress,
+  },
+  userLogin: { userInfo: localStorageUserInfo },
 }
 
 const middleware = [thunk]

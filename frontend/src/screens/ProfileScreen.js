@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Form, Button, Row, Col, Table } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
@@ -138,7 +138,7 @@ function ProfileScreen() {
             <h2>Danh sách đơn hàng</h2>
           </Col>
           <Col md={1} className='d-flex justify-content-end align-items-center'>
-            <i class='fa-solid fa-rotate' role='button' onClick={reloadOrderList}></i>
+            <i className='fa-solid fa-rotate' role='button' onClick={reloadOrderList}></i>
           </Col>
         </Row>
         {orderLoading ? (
