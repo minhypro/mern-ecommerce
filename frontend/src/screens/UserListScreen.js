@@ -28,10 +28,6 @@ function UserListScreen() {
   const [deleteAdminCount, setDeleteAdminCount] = useState(0)
 
   const deleteHandler = (user) => {
-    
-    if (deleteAdminCount >= 3) {
-      dispatch(logout())
-    }
 
     if (user.isAdmin) {
       setShow(false)
@@ -55,8 +51,9 @@ function UserListScreen() {
     <>
       <h1>Danh sách tài khoản</h1>
       {deleteAdminCount === 1  && <Message variant='danger'>Không thể xóa tài khoản admin</Message>}
-      {deleteAdminCount > 1 && deleteAdminCount <= 2  && <Message variant='danger'>{`Không thể xóa tài khoản admin. Đừng có lì nha >.<`}</Message>}
-      {deleteAdminCount >= 3 && deleteAdminCount < 4  && <Message variant='danger'>{`Không thể xóa tài khoản admin. Một lần nữa là out nha bạn`}</Message>}
+      {deleteAdminCount > 1 && deleteAdminCount < 3  && <Message variant='danger'>{`Đã bảo là không thể xóa tài khoản admin. Đừng có lì nha >.<`}</Message>}
+      {deleteAdminCount >= 3 && deleteAdminCount < 4  && <Message variant='danger'>{`Lì một lần nữa là out nha sếp :v`}</Message>}
+      {deleteAdminCount >= 4 && dispatch(logout()) }
       {loading ? (
         <Loader />
       ) : error ? (
