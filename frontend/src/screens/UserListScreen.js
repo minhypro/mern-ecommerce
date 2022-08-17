@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { LinkContainer } from 'react-router-bootstrap'
-import { Table, Button, Modal } from 'react-bootstrap'
+import { Row, Col, Table, Button, Modal } from 'react-bootstrap'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { listUsers, deleteUser, logout } from '../actions/userActions'
@@ -30,7 +30,7 @@ function UserListScreen() {
   const deleteHandler = (user) => {
     if (user.isAdmin) {
       setShow(false)
-      setDeleteAdminCount(prev => prev + 1)
+      setDeleteAdminCount((prev) => prev + 1)
     } else {
       setShow(false)
       dispatch(deleteUser(user._id))
@@ -46,13 +46,28 @@ function UserListScreen() {
     setSelectedUser(user)
   }
 
+  const reloadUserList = () => {
+    dispatch(listUsers())
+  }
+
   return (
     <>
-      <h1>Danh sách tài khoản</h1>
-      {deleteAdminCount === 1  && <Message variant='danger'>Không thể xóa tài khoản admin</Message>}
-      {deleteAdminCount > 1 && deleteAdminCount < 3  && <Message variant='danger'>{`Đã bảo là không thể xóa tài khoản admin. Đừng có lì nha >.<`}</Message>}
-      {deleteAdminCount >= 3 && deleteAdminCount < 4  && <Message variant='danger'>{`Lì một lần nữa là out nha sếp :v`}</Message>}
-      {deleteAdminCount >= 4 && dispatch(logout()) }
+      <Row className='justify-content-between'>
+        <Col md={11}>
+          <h1>Danh sách tài khoản</h1>
+        </Col>
+        <Col md={1} className='d-flex justify-content-end align-items-center'>
+          <i className='fa-solid fa-rotate' role='button' onClick={reloadUserList}></i>
+        </Col>
+      </Row>
+      {deleteAdminCount === 1 && <Message variant='danger'>Không thể xóa tài khoản admin</Message>}
+      {deleteAdminCount > 1 && deleteAdminCount < 3 && (
+        <Message variant='danger'>{`Đã bảo là không thể xóa tài khoản admin. Đừng có lì nha >.<`}</Message>
+      )}
+      {deleteAdminCount >= 3 && deleteAdminCount < 4 && (
+        <Message variant='danger'>{`Lì một lần nữa là out nha sếp :v`}</Message>
+      )}
+      {deleteAdminCount >= 4 && dispatch(logout())}
       {loading ? (
         <Loader />
       ) : error ? (
