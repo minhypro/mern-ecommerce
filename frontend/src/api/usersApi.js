@@ -32,6 +32,15 @@ const usersApi = {
     }
     return axiosClient.put(`/api/users/profile`, user, config)
   },
+  updateUserByAdmin: (user, token) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token,
+      },
+    }
+    return axiosClient.put(`/api/users/${user.id}`, user, config)
+  },
   listAllUsers: (token) => {
     const config = {
       headers: {

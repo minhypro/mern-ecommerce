@@ -29,13 +29,13 @@ function Header() {
               </LinkContainer>
               {userInfo && userInfo.isAdmin && (
                 <NavDropdown title='Quản lý' id='adminmenu'>
-                  <LinkContainer to='/admin/userlist'>
+                  <LinkContainer to='/admin/users'>
                     <NavDropdown.Item>Người dùng</NavDropdown.Item>
                   </LinkContainer>
-                  <LinkContainer to='/admin/productlist'>
+                  <LinkContainer to='/admin/products'>
                     <NavDropdown.Item>Sản phẩm</NavDropdown.Item>
                   </LinkContainer>
-                  <LinkContainer to='/admin/orderlist'>
+                  <LinkContainer to='/admin/orders'>
                     <NavDropdown.Item>Đơn hàng</NavDropdown.Item>
                   </LinkContainer>
                 </NavDropdown>

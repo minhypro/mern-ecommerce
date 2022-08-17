@@ -21,6 +21,9 @@ import {
   USER_DELETE_SUCCESS,
   USER_DELETE_FAIL,
   USER_REGISTER_RESET,
+  USER_UPDATE_BY_ADMIN_REQUEST,
+  USER_UPDATE_BY_ADMIN_SUCCESS,
+  USER_UPDATE_BY_ADMIN_FAIL,
 } from '../constants/userConstants'
 import { MY_ORDER_LIST_RESET } from '../constants/orderConstants'
 import { CART_RESET_ITEM } from '../constants/cartConstants'
@@ -142,6 +145,28 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
   } catch (err) {
     dispatch({
       type: USER_UPDATE_PROFILE_FAIL,
+      payload: err,
+    })
+  }
+}
+
+export const updateUserByAdmin = (user) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: USER_UPDATE_BY_ADMIN_REQUEST,
+    })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const data = await usersApi.updateUserByAdmin(user, userInfo.token)
+
+    dispatch({ type: USER_UPDATE_BY_ADMIN_SUCCESS })
+    dispatch({ type: USER_DETAILS_SUCCESS, payload: data })
+  } catch (err) {
+    dispatch({
+      type: USER_UPDATE_BY_ADMIN_FAIL,
       payload: err,
     })
   }

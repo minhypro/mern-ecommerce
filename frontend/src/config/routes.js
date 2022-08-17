@@ -10,6 +10,7 @@ import PaymentScreen from '../screens/PaymentScreen'
 import PlaceOrderScreen from '../screens/PlaceOrderScreen'
 import OrderDetailsScreen from '../screens/OrderDetailsScreen'
 import UserListScreen from '../screens/UserListScreen'
+import EditUserScreen from '../screens/EditUserScreen'
 
 function Routes() {
     return (
@@ -25,7 +26,8 @@ function Routes() {
             <Route path='/payment' element={<PaymentScreen/>}/>
             <Route path='/placeorder' element={<PlaceOrderScreen/>}/>
             <Route path='/order/:id' element={<OrderDetailsScreen/>}/>
-            <Route path='/admin/userlist' element={<UserListScreen/>}/>
+            <Route path='/admin/users' element={<UserListScreen/>}/>
+            <Route path='/admin/user/:id/edit' element={<EditUserScreen/>}/>
         </ReactRoutes>
     );
 }
