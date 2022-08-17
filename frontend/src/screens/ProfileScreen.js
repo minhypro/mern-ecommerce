@@ -7,6 +7,7 @@ import Loader from '../components/Loader'
 import { getUserDetails, updateUserProfile } from '../actions/userActions'
 import { listMyOrders } from '../actions/orderActions'
 import { LinkContainer } from 'react-router-bootstrap'
+import Price from '../components/Price'
 
 function ProfileScreen() {
   const navigate = useNavigate()
@@ -163,7 +164,7 @@ function ProfileScreen() {
                   <td>{order._id}</td>
                   <td>{(order.createdAt + '').substring(0, 10)}</td>
                   <td>
-                    {order.totalPrice}
+                    <Price>{order.totalPrice}</Price>
                     <sup>đ</sup>
                   </td>
                   <td>

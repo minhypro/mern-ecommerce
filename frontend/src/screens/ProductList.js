@@ -5,6 +5,7 @@ import { LinkContainer } from 'react-router-bootstrap'
 import { Row, Col, Table, Button, Modal, Image } from 'react-bootstrap'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
+import Price from '../components/Price'
 import { listProducts, deleteProductById } from '../actions/productActions'
 
 function ProductList() {
@@ -48,7 +49,7 @@ function ProductList() {
         <Col md={11}>
           <h1>Danh sách sản phẩm</h1>
           <LinkContainer to={'/admin/products/add'}>
-            <Button>Thêm sản phẩm</Button>
+            <Button className='mb-4'>Thêm sản phẩm</Button>
           </LinkContainer>
         </Col>
         <Col md={1} className='d-flex justify-content-end align-items-center'>
@@ -81,7 +82,7 @@ function ProductList() {
                 <td>{product.category}</td>
                 <td>{product.brand}</td>
                 <td>
-                  {product.price}
+                  <Price>{product.price}</Price>
                   <sup>đ</sup>
                 </td>
                 <td>

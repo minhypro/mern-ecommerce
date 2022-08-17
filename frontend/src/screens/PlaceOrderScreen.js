@@ -7,6 +7,7 @@ import CheckoutStep from '../components/CheckoutStep'
 import { FREE_SHIP_PRICE, SHIPPING_PRICE } from '../constants/cartConstants'
 import { createOrder, resetCreatedOrder } from '../actions/orderActions'
 import { resetCart } from '../actions/cartActions'
+import Price from '../components/Price'
 
 function PlaceOrderScreen() {
   const dispatch = useDispatch()
@@ -89,8 +90,8 @@ function PlaceOrderScreen() {
                           <Link to={`/products/${item.product}`}>{item.name}</Link>
                         </Col>
                         <Col md={4} align='end'>
-                          {item.qty} x{item.price}
-                          <sup>₫</sup> ={item.price * item.qty}
+                          {item.qty} x <Price>{item.price}</Price>
+                          <sup>₫</sup> = <Price>{item.price * item.qty}</Price>
                           <sup>₫</sup>
                         </Col>
                       </Row>
@@ -111,7 +112,7 @@ function PlaceOrderScreen() {
                 <Row>
                   <Col>Tiền hàng</Col>
                   <Col>
-                    {cart.itemsPrice}
+                    <Price>{cart.itemsPrice}</Price>
                     <sup>₫</sup>
                   </Col>
                 </Row>
@@ -120,7 +121,7 @@ function PlaceOrderScreen() {
                 <Row>
                   <Col>Phí vận chuyển</Col>
                   <Col>
-                    {cart.shippingPrice}
+                    <Price>{cart.shippingPrice}</Price>
                     <sup>₫</sup>
                   </Col>
                 </Row>
@@ -139,7 +140,7 @@ function PlaceOrderScreen() {
                 <Row>
                   <Col>Tổng cộng</Col>
                   <Col>
-                    {cart.totalPrice}
+                    <Price>{cart.totalPrice}</Price>
                     <sup>₫</sup>
                   </Col>
                 </Row>
