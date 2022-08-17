@@ -5,6 +5,9 @@ import {
     PRODUCT_DETAIL_REQUEST,
     PRODUCT_DETAIL_SUCCESS,
     PRODUCT_DETAIL_FAIL,
+    PRODUCT_DELETE_REQUEST,
+    PRODUCT_DELETE_SUCCESS,
+    PRODUCT_DELETE_FAIL,
 }
     from '../constants/productConstants'
 import productsApi from '../api/productsApi'
@@ -44,3 +47,27 @@ export const listProductDetails = (id) => async (dispatch) => {
         })
     }
 }
+
+export const deleteProductById = (id) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: PRODUCT_DELETE_REQUEST,
+      })
+  
+      const {
+        userLogin: { userInfo },
+      } = getState()
+  
+      const data = await productsApi.deleteProduct(id, userInfo.token)
+  
+      dispatch({
+        type: PRODUCT_DELETE_SUCCESS,
+        payload: data,
+      })
+    } catch (err) {
+      dispatch({
+        type: PRODUCT_DELETE_FAIL,
+        payload: err,
+      })
+    }
+  }

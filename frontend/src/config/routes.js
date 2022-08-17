@@ -11,6 +11,8 @@ import PlaceOrderScreen from '../screens/PlaceOrderScreen'
 import OrderDetailsScreen from '../screens/OrderDetailsScreen'
 import UserListScreen from '../screens/UserListScreen'
 import EditUserScreen from '../screens/EditUserScreen'
+import ProductList from '../screens/ProductList'
+import NewProductScreen from '../screens/NewProductScreen'
 
 function Routes() {
     return (
@@ -28,6 +30,9 @@ function Routes() {
             <Route path='/order/:id' element={<OrderDetailsScreen/>}/>
             <Route path='/admin/users' element={<UserListScreen/>}/>
             <Route path='/admin/user/:id/edit' element={<EditUserScreen/>}/>
+            <Route path='/admin/products' element={<ProductList/>}/>
+            <Route path='/admin/products/add' element={<NewProductScreen/>}/>
+           
         </ReactRoutes>
     );
 }

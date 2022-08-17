@@ -35,6 +35,10 @@ form div {
   margin-bottom: 10px;
 }
 
+.btn {
+  margin-bottom: 20px;
+}
+
 button.btn + .btn {
   margin-left: 10px;
 }
