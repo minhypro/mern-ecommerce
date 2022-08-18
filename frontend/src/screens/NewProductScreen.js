@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { Form, Button, Row, Col } from 'react-bootstrap'
+import { Link, useNavigate } from 'react-router-dom'
+import { Form, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import { register } from '../actions/userActions'
 import FormContainer from '../components/FormContainer'
+import { addProduct } from '../actions/productActions'
+import { PRODUCT_ADD_RESET } from '../constants/productConstants'
 
 function NewProductScreen() {
   const navigate = useNavigate()
@@ -13,109 +14,123 @@ function NewProductScreen() {
   const [image, setImage] = useState('')
   const [description, setDescription] = useState('')
   const [brand, setBrand] = useState('')
+  const [category, setCategory] = useState('')
   const [price, setPrice] = useState(10000)
-  const [quantity, setQuantity] = useState(0)
-  const [message, setMessage] = useState(null)
+  const [countInStock, setCountInStock] = useState(0)
 
   const dispatch = useDispatch()
 
-  const userRegister = useSelector((state) => state.userRegister)
-  const { loading, error, userInfo } = userRegister
+  const productAdd = useSelector((state) => state.productAdd)
+  const { loading, error, success } = productAdd
 
   const errorMessage = error && error.response.data.message
 
-  let location = useLocation()
-  const redirect = location.search ? location.search.split('=')[1] : '/'
-
   useEffect(() => {
-    if (userInfo && Object.keys(userInfo).length !== 0) {
-      navigate(redirect)
+    if (success) {
+      dispatch({ type: PRODUCT_ADD_RESET })
+      navigate('/admin/products')
     }
-  }, [userInfo, redirect, navigate])
+  }, [success, navigate, dispatch])
 
   const submitHandler = (e) => {
     e.preventDefault()
+    dispatch(addProduct({ name, image, description, category, brand, price, countInStock }))
   }
 
   return (
-    <FormContainer>
-      <h1>Thêm sản phẩm mới</h1>
-      {errorMessage && <Message variant='danger'>{errorMessage}</Message>}
-      {message && <Message variant='danger'>{message}</Message>}
-      {loading && <Loader />}
-      <Form onSubmit={submitHandler}>
-        <Form.Group controlId='name'>
-          <Form.Label>Tên sản phẩm</Form.Label>
-          <Form.Control
-            type='text'
-            placeholder='Nhập tên sản phẩm'
-            value={name}
-            required
-            onChange={(e) => setName(e.target.value)}
-          />
-        </Form.Group>
+    <>
+      <Link className='btn btn-light my-3' to='/admin/products'>
+        Quay lại
+      </Link>
+      <FormContainer>
+        <h1>Thêm sản phẩm mới</h1>
+        {errorMessage && <Message variant='danger'>{errorMessage}</Message>}
+        {loading && <Loader />}
+        <Form onSubmit={submitHandler}>
+          <Form.Group controlId='name'>
+            <Form.Label>Tên sản phẩm</Form.Label>
+            <Form.Control
+              type='text'
+              placeholder='Nhập tên sản phẩm'
+              value={name}
+              required
+              onChange={(e) => setName(e.target.value)}
+            />
+          </Form.Group>
 
-        <Form.Group controlId='image'>
-          <Form.Label>Hình ảnh</Form.Label>
-          <Form.Control
-            type='text'
-            placeholder='Nhập đường dẫn'
-            value={image}
-            required
-            onChange={(e) => setImage(e.target.value)}
-          />
-        </Form.Group>
+          <Form.Group controlId='image'>
+            <Form.Label>Hình ảnh</Form.Label>
+            <Form.Control
+              type='text'
+              placeholder='Nhập đường dẫn'
+              value={image}
+              required
+              onChange={(e) => setImage(e.target.value)}
+            />
+          </Form.Group>
 
-        <Form.Group controlId='description'>
-          <Form.Label>Mô tả sản phẩm</Form.Label>
-          <Form.Control
-            type='text'
-            placeholder='Nhập mô tả'
-            value={description}
-            required
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </Form.Group>
+          <Form.Group controlId='description'>
+            <Form.Label>Mô tả sản phẩm</Form.Label>
+            <Form.Control
+              type='text'
+              placeholder='Nhập mô tả'
+              value={description}
+              required
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </Form.Group>
 
-        <Form.Group controlId='brand'>
-          <Form.Label>Thương hiệu</Form.Label>
-          <Form.Control
-            type='text'
-            placeholder='Nhập thương hiệu'
-            value={brand}
-            required
-            onChange={(e) => setBrand(e.target.value)}
-          />
-        </Form.Group>
+          <Form.Group controlId='category'>
+            <Form.Label>Phân loại</Form.Label>
+            <Form.Control
+              type='text'
+              placeholder='Nhập phân loại'
+              value={category}
+              required
+              onChange={(e) => setCategory(e.target.value)}
+            />
+          </Form.Group>
 
-        <Form.Group controlId='price'>
-          <Form.Label>{`Giá (vnđ)`}</Form.Label>
-          <Form.Control
-            type='number'
-            placeholder='Nhập giá sản phẩm'
-            value={price}
-            required
-            step='1000'
-            onChange={(e) => setPrice(e.target.value)}
-          />
-        </Form.Group>
+          <Form.Group controlId='brand'>
+            <Form.Label>Thương hiệu</Form.Label>
+            <Form.Control
+              type='text'
+              placeholder='Nhập thương hiệu'
+              value={brand}
+              required
+              onChange={(e) => setBrand(e.target.value)}
+            />
+          </Form.Group>
 
-        <Form.Group controlId='brand'>
-          <Form.Label>Số lượng</Form.Label>
-          <Form.Control
-            type='number'
-            placeholder='Nhập số lương'
-            value={quantity}
-            required
-            onChange={(e) => setQuantity(e.target.value)}
-          />
-        </Form.Group>
+          <Form.Group controlId='price'>
+            <Form.Label>{`Giá (vnđ)`}</Form.Label>
+            <Form.Control
+              type='number'
+              placeholder='Nhập giá sản phẩm'
+              value={price}
+              required
+              step='1000'
+              onChange={(e) => setPrice(e.target.value)}
+            />
+          </Form.Group>
 
-        <Button type='submit' variant='primary'>
-          Xác nhận
-        </Button>
-      </Form>
-    </FormContainer>
+          <Form.Group controlId='brand'>
+            <Form.Label>Số lượng</Form.Label>
+            <Form.Control
+              type='number'
+              placeholder='Nhập số lương'
+              value={countInStock}
+              required
+              onChange={(e) => setCountInStock(e.target.value)}
+            />
+          </Form.Group>
+
+          <Button type='submit' variant='primary'>
+            Xác nhận
+          </Button>
+        </Form>
+      </FormContainer>
+    </>
   )
 }
 
