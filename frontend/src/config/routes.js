@@ -10,31 +10,35 @@ import PaymentScreen from '../screens/PaymentScreen'
 import PlaceOrderScreen from '../screens/PlaceOrderScreen'
 import OrderDetailsScreen from '../screens/OrderDetailsScreen'
 import UserListScreen from '../screens/UserListScreen'
-import EditUserScreen from '../screens/EditUserScreen'
+import UserEditScreen from '../screens/UserEditScreen'
 import ProductList from '../screens/ProductList'
 import NewProductScreen from '../screens/NewProductScreen'
+import ProductEditScreen from '../screens/ProductEditScreen'
 
 function Routes() {
-    return (
-        <ReactRoutes>
-            <Route path='/' element={<HomeScreen/>}/>
-            <Route path='/products/:id' element={<ProductScreen/>}/>
-            <Route path='/cart' element={<CartScreen/>}/>
-            <Route path='/cart/:id' element={<CartScreen/>}/>
-            <Route path='/login' element={<LoginScreen/>}/>
-            <Route path='/register' element={<RegisterScreen/>}/>
-            <Route path='/profile' element={<ProfileScreen/>}/>
-            <Route path='/shipping' element={<ShippingScreen/>}/>
-            <Route path='/payment' element={<PaymentScreen/>}/>
-            <Route path='/placeorder' element={<PlaceOrderScreen/>}/>
-            <Route path='/order/:id' element={<OrderDetailsScreen/>}/>
-            <Route path='/admin/users' element={<UserListScreen/>}/>
-            <Route path='/admin/user/:id/edit' element={<EditUserScreen/>}/>
-            <Route path='/admin/products' element={<ProductList/>}/>
-            <Route path='/admin/products/add' element={<NewProductScreen/>}/>
-           
-        </ReactRoutes>
-    );
+  return (
+    <ReactRoutes>
+      <Route path='/' element={<HomeScreen />} />
+
+      <Route path='/products/:id' element={<ProductScreen />} />
+
+      <Route path='/cart' element={<CartScreen />} />      
+      <Route path='/shipping' element={<ShippingScreen />} />
+      <Route path='/payment' element={<PaymentScreen />} />
+      <Route path='/placeorder' element={<PlaceOrderScreen />} />
+      <Route path='/order/:id' element={<OrderDetailsScreen />} />
+
+      <Route path='/login' element={<LoginScreen />} />
+      <Route path='/register' element={<RegisterScreen />} />
+      <Route path='/profile' element={<ProfileScreen />} />
+
+      <Route path='/admin/users' element={<UserListScreen />} />
+      <Route path='/admin/users/:id/edit' element={<UserEditScreen />} />
+      <Route path='/admin/products' element={<ProductList />} />
+      <Route path='/admin/products/:id/edit' element={<ProductEditScreen />} />
+      <Route path='/admin/products/add' element={<NewProductScreen />} />
+    </ReactRoutes>
+  )
 }
 
-export default Routes;
+export default Routes

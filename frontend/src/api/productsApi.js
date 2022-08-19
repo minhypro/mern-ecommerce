@@ -25,6 +25,15 @@ const productsApi = {
     }
     return axiosClient.post(`/api/products/add`, product, config)
   },
+  updateProduct: (product, token) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token,
+      },
+    }
+    return axiosClient.put(`/api/products/${product.id}/update`, product, config)
+  },
 }
 
 export default productsApi

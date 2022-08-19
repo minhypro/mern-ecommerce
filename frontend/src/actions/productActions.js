@@ -11,6 +11,9 @@ import {
   PRODUCT_ADD_REQUEST,
   PRODUCT_ADD_SUCCESS,
   PRODUCT_ADD_FAIL,
+  PRODUCT_UPDATE_REQUEST,
+  PRODUCT_UPDATE_SUCCESS,
+  PRODUCT_UPDATE_FAIL,
 } from '../constants/productConstants'
 import productsApi from '../api/productsApi'
 
@@ -93,6 +96,31 @@ export const addProduct = (product) => async (dispatch, getState) => {
   } catch (err) {
     dispatch({
       type: PRODUCT_ADD_FAIL,
+      payload: err,
+    })
+  }
+}
+
+export const updateProduct = (product) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: PRODUCT_UPDATE_REQUEST,
+    })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const reqBody = { ...product, user: userInfo._id }
+
+    await productsApi.updateProduct(reqBody, userInfo.token)
+
+    dispatch({
+      type: PRODUCT_UPDATE_SUCCESS,
+    })
+  } catch (err) {
+    dispatch({
+      type: PRODUCT_UPDATE_FAIL,
       payload: err,
     })
   }

@@ -86,7 +86,7 @@ function ProductList() {
                   <sup>đ</sup>
                 </td>
                 <td>
-                  <LinkContainer to={`/admin/user/${product._id}/edit`}>
+                  <LinkContainer to={`/admin/products/${product._id}/edit`}>
                     <Button variant='light' className='btn-sm'>
                       <i className='fas fa-edit'></i>
                     </Button>
@@ -94,7 +94,6 @@ function ProductList() {
                   <Button
                     variant='danger'
                     className='btn-sm'
-                    // disabled={user.isAdmin}
                     onClick={() => confirmDeleteUser(product)}
                   >
                     <i className='fas fa-trash'></i>

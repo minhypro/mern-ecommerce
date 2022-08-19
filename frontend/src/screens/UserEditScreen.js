@@ -8,7 +8,7 @@ import { getUserDetails, updateUserByAdmin } from '../actions/userActions'
 import FormContainer from '../components/FormContainer'
 import { USER_UPDATE_BY_ADMIN_RESET } from '../constants/userConstants'
 
-function EditUserScreen() {
+function UserEditScreen() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [role, setRole] = useState('')
@@ -119,4 +119,4 @@ function EditUserScreen() {
   )
 }
 
-export default EditUserScreen
+export default UserEditScreen

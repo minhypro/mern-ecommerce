@@ -43,7 +43,7 @@ const getProductById = asyncHandler(async function (req, res) {
 // @route   POST /api/products/add
 // @access  Private/Admin
 const addProduct = asyncHandler(async function (req, res) {
-  const {user, name, image, description, category, brand, price, countInStock} = req.body
+  const { user, name, image, description, category, brand, price, countInStock } = req.body
 
   const product = await Product.create({
     user,
@@ -65,6 +65,31 @@ const addProduct = asyncHandler(async function (req, res) {
 })
 
 // PUT
+
+// @desc    Update product
+// @route   PUT /api/products/:id/update
+// @access  Private/Admin
+const updateProduct = asyncHandler(async function (req, res) {
+  const { name, image, description, category, brand, price, countInStock } = req.body
+
+  const product = await Product.findById(req.params.id)
+
+  if (product) {
+    product.name = name
+    product.image = image
+    product.description = description
+    product.category = category
+    product.brand = brand
+    product.price = price
+    product.countInStock = countInStock
+
+    product.save()
+    res.json(product)
+  } else {
+    res.status(400)
+    throw new Error('Invalid data')
+  }
+})
 
 // DELETE
 
@@ -88,4 +113,4 @@ const deleteProductById = asyncHandler(async function (req, res) {
   }
 })
 
-export { getProducts, getProductById, deleteProductById, addProduct }
+export { getProducts, getProductById, deleteProductById, addProduct, updateProduct }
