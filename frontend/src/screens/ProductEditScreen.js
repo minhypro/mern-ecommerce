@@ -6,7 +6,8 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
 import { listProductDetails, updateProduct } from '../actions/productActions'
-import { PRODUCT_ADD_RESET, PRODUCT_UPDATE_RESET } from '../constants/productConstants'
+import { PRODUCT_UPDATE_RESET } from '../constants/productConstants'
+import uploadApi from '../api/uploadApi'
 
 function ProductEditScreen() {
   const navigate = useNavigate()
@@ -18,9 +19,13 @@ function ProductEditScreen() {
   const [category, setCategory] = useState('')
   const [price, setPrice] = useState(10000)
   const [countInStock, setCountInStock] = useState(0)
+  
+  const [uploading, setUploading] = useState(false)
+  const [uploadError, setUploadError] = useState(false)
 
   const dispatch = useDispatch()
 
+  const { userInfo } = useSelector((state) => state.userLogin)
   const productDetails = useSelector((state) => state.productDetails)
   const { product } = productDetails
 
@@ -44,6 +49,22 @@ function ProductEditScreen() {
     dispatch({ type: PRODUCT_UPDATE_RESET })
   }, [navigate, dispatch, params.id])
 
+  const uploadFileHandler = async (e) => {
+    const file = e.target.files[0]
+    const formData = new FormData()
+    formData.append('image', file)
+    setUploading(true)
+
+    try {
+      const data = await uploadApi.uploadImage(formData, userInfo.token)
+      setImage(data)
+      setUploading(false)
+    } catch (error) {
+      setUploading(false)
+      setUploadError('Lỗi khi tải ảnh lên')
+    }
+  }
+
   const submitHandler = (e) => {
     e.preventDefault()
     dispatch(
@@ -66,7 +87,7 @@ function ProductEditScreen() {
         Quay lại
       </Link>
       <FormContainer>
-        <h1>Thêm sản phẩm mới</h1>
+        <h1>Chỉnh sửa sản phẩm</h1>
         {errorMessage && <Message variant='danger'>{errorMessage}</Message>}
         {success && <Message variant='success'>Cập nhật thông tin thành công</Message>}
         {loading && <Loader />}
@@ -91,6 +112,9 @@ function ProductEditScreen() {
               required
               onChange={(e) => setImage(e.target.value)}
             />
+            <Form.Control type='file' onChange={uploadFileHandler} />
+            {uploading && <Loader />}
+            {uploadError && <Message className="mt-2" variant='danger'>{uploadError}</Message>}
           </Form.Group>
 
           <Form.Group controlId='description'>

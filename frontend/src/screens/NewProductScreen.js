@@ -7,6 +7,7 @@ import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
 import { addProduct } from '../actions/productActions'
 import { PRODUCT_ADD_RESET } from '../constants/productConstants'
+import uploadApi from '../api/uploadApi'
 
 function NewProductScreen() {
   const navigate = useNavigate()
@@ -18,8 +19,12 @@ function NewProductScreen() {
   const [price, setPrice] = useState(10000)
   const [countInStock, setCountInStock] = useState(0)
 
+  const [uploading, setUploading] = useState(false)
+  const [uploadError, setUploadError] = useState(false)
+
   const dispatch = useDispatch()
 
+  const { userInfo } = useSelector((state) => state.userLogin)
   const productAdd = useSelector((state) => state.productAdd)
   const { loading, error, success } = productAdd
 
@@ -31,6 +36,22 @@ function NewProductScreen() {
       navigate('/admin/products')
     }
   }, [success, navigate, dispatch])
+
+  const uploadFileHandler = async (e) => {
+    const file = e.target.files[0]
+    const formData = new FormData()
+    formData.append('image', file)
+    setUploading(true)
+
+    try {
+      const data = await uploadApi.uploadImage(formData, userInfo.token)
+      setImage(data)
+      setUploading(false)
+    } catch (error) {
+      setUploading(false)
+      setUploadError('Lỗi khi tải ảnh lên')
+    }
+  }
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -67,6 +88,9 @@ function NewProductScreen() {
               required
               onChange={(e) => setImage(e.target.value)}
             />
+            <Form.Control type='file' onChange={uploadFileHandler} />
+            {uploading && <Loader />}
+            {uploadError && <Message className="mt-2" variant='danger'>{uploadError}</Message>}
           </Form.Group>
 
           <Form.Group controlId='description'>
