@@ -12,7 +12,7 @@ import OrderDetailsScreen from '../screens/OrderDetailsScreen'
 import UserListScreen from '../screens/UserListScreen'
 import UserEditScreen from '../screens/UserEditScreen'
 import ProductList from '../screens/ProductList'
-import NewProductScreen from '../screens/NewProductScreen'
+import ProductNewScreen from '../screens/ProductNewScreen'
 import ProductEditScreen from '../screens/ProductEditScreen'
 
 function Routes() {
@@ -36,7 +36,7 @@ function Routes() {
       <Route path='/admin/users/:id/edit' element={<UserEditScreen />} />
       <Route path='/admin/products' element={<ProductList />} />
       <Route path='/admin/products/:id/edit' element={<ProductEditScreen />} />
-      <Route path='/admin/products/add' element={<NewProductScreen />} />
+      <Route path='/admin/products/add' element={<ProductNewScreen />} />
     </ReactRoutes>
   )
 }

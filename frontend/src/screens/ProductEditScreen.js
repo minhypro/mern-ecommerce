@@ -54,6 +54,7 @@ function ProductEditScreen() {
     const formData = new FormData()
     formData.append('image', file)
     setUploading(true)
+    setUploadError(false)
 
     try {
       const data = await uploadApi.uploadImage(formData, userInfo.token)
