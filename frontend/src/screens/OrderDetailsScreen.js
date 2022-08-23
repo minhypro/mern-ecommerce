@@ -32,6 +32,16 @@ function OrderDetailsScreen() {
     dispatch(getOrderDetails(orderId))
     setShow(false)
   }
+  
+  const markReceivePaymentHandler = async () => {
+    await ordersApi.orderPaid(orderId, userLogin.userInfo.token)
+    dispatch(getOrderDetails(orderId))
+  }
+
+  const markDeliveredHandler = async () => {
+    await ordersApi.orderDelivered(orderId, userLogin.userInfo.token)
+    dispatch(getOrderDetails(orderId))
+  }
 
   return loading ? (
     <Loader />
@@ -46,14 +56,14 @@ function OrderDetailsScreen() {
             <ListGroup.Item>
               <h2>Thông tin nhận hàng</h2>
               <p>
-                <strong>Tên: </strong> {order.user.name}
+                <strong>Tên: </strong> {(order.user && order.user.name) || 'Khách lạ'}
               </p>
               <p>
                 <strong>Địa chỉ: </strong>
                 {order.shippingAddress.address}, {order.shippingAddress.city},{' '}
                 {order.shippingAddress.country}
               </p>
-              {order.isDelivery ? (
+              {order.isDelivered ? (
                 <Message variant='success'>Đã giao vào lúc {order.deliveredAt}</Message>
               ) : (
                 <Message variant='warning'>Đang chuẩn bị hàng</Message>
@@ -132,21 +142,36 @@ function OrderDetailsScreen() {
                   </Col>
                 </Row>
               </ListGroup.Item>
+              <Button
+                onClick={showModalHandler}
+                disabled={
+                  (order && order.isPaid) ||
+                  (order && order.isSentPayment) ||
+                  order.paymentMethod === 'cod'
+                }
+              >
+                {(order && order.isPaid && 'Đã thanh toán') ||
+                  (order && order.isSentPayment && 'Đã chuyển khoản') ||
+                  (order.paymentMethod === 'cod' && 'Thanh toán khi nhận hàng') ||
+                  'Thanh toán'}
+              </Button>
             </ListGroup>
-            <Button
-              onClick={showModalHandler}
-              disabled={
-                (order && order.isPaid) ||
-                (order && order.isSentPayment) ||
-                order.paymentMethod === 'cod'
-              }
-            >
-              {(order && order.isPaid && 'Đã thanh toán') ||
-                (order && order.isSentPayment && 'Đã chuyển khoản') ||
-                (order.paymentMethod === 'cod' && 'Thanh toán khi nhận hàng') ||
-                'Thanh toán'}
-            </Button>
           </Card>
+          {userLogin.userInfo.isAdmin && (
+            <Card>
+              <ListGroup variant='flush'>
+                <ListGroup.Item>
+                  <h2>Admin area</h2>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                <Button onClick={markReceivePaymentHandler} disabled={order.isPaid} >Đã nhận thanh toán</Button>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                <Button onClick={markDeliveredHandler} disabled={order.isDelivered}>Đã giao hàng</Button>
+                </ListGroup.Item>
+              </ListGroup>
+            </Card>
+          )}
         </Col>
       </Row>
       <Modal show={show} onHide={closeModalHandler} centered backdrop='static' keyboard={false}>

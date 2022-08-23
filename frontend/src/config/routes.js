@@ -12,6 +12,7 @@ import OrderDetailsScreen from '../screens/OrderDetailsScreen'
 import UserListScreen from '../screens/UserListScreen'
 import UserEditScreen from '../screens/UserEditScreen'
 import ProductList from '../screens/ProductList'
+import OrderListScreen from '../screens/OrderListScreen'
 import ProductNewScreen from '../screens/ProductNewScreen'
 import ProductEditScreen from '../screens/ProductEditScreen'
 
@@ -21,8 +22,8 @@ function Routes() {
       <Route path='/' element={<HomeScreen />} />
 
       <Route path='/products/:id' element={<ProductScreen />} />
-
-      <Route path='/cart' element={<CartScreen />} />      
+      <Route path='/cart' element={<CartScreen />} />
+      <Route path='/cart/:id' element={<CartScreen />} />
       <Route path='/shipping' element={<ShippingScreen />} />
       <Route path='/payment' element={<PaymentScreen />} />
       <Route path='/placeorder' element={<PlaceOrderScreen />} />
@@ -37,6 +38,7 @@ function Routes() {
       <Route path='/admin/products' element={<ProductList />} />
       <Route path='/admin/products/:id/edit' element={<ProductEditScreen />} />
       <Route path='/admin/products/add' element={<ProductNewScreen />} />
+      <Route path='/admin/orders' element={<OrderListScreen />} />
     </ReactRoutes>
   )
 }

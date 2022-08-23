@@ -176,7 +176,7 @@ function ProfileScreen() {
                       ? 'Đã chuyển khoản'
                       : 'Chưa thanh toán'}
                   </td>
-                  <td>{order.isDelivery ? order.deliveredAt : 'Đang giao'}</td>
+                  <td>{order.isDelivered ? order.deliveredAt : 'Đang giao'}</td>
                   <td>
                     <LinkContainer to={`/order/${order._id}`}>
                       <Button variant='light' className='btn-sm'>

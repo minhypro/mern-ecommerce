@@ -1,6 +1,42 @@
 import asyncHandler from 'express-async-handler'
+import mongoose from 'mongoose'
 import Order from '../models/orderModel.js'
 import User from '../models/userModel.js'
+
+// GET
+
+// @desc    Get order by ID
+// @route   GET /api/orders/:id
+// @access  Private
+const getOrderById = asyncHandler(async function (req, res) {
+  const order = await Order.findById(req.params.id).populate('user', 'name email')
+
+  if (!order) {
+    res.status(404)
+    throw new Error('Order not found')
+  } else {
+    res.json(order)
+  }
+})
+
+// @desc    Get logged in user orders
+// @route   Get /api/orders/myorders
+// @access  Private
+const getMyOrders = asyncHandler(async function (req, res) {
+  const order = await Order.find({ user: req.user._id })
+  res.json(order)
+})
+
+// @desc    Get all orders
+// @route   Get /api/orders
+// @access  Private/admin
+const getAllOrders = asyncHandler(async function (req, res) {
+  const order = await Order.find({}).populate('user', 'id name')
+  res.json(order)
+})
+
+
+// POST
 
 // @desc    Create new order
 // @route   POST /api/orders
@@ -26,41 +62,39 @@ const addOrderItems = asyncHandler(async function (req, res) {
   }
 })
 
-// @desc    Get order by ID
-// @route   GET /api/orders/:id
-// @access  Private
-const getOrderById = asyncHandler(async function (req, res) {
-  const order = await Order.findById(req.params.id).populate('user', 'name email')
+// PUT 
 
-  if (!order) {
+// @desc    Update order to paid
+// @route   PUT /api/orders/:id/pay
+// @access  Private/admin
+const updateOrderToPaid = asyncHandler(async function (req, res) {
+  const order = await Order.findById(req.params.id)
+  if (order) {
+    order.isPaid = true
+    order.paidAt = Date.now()
+
+    const updateOrder = await order.save()
+    res.json(updateOrder)
+  } else {
     res.status(404)
     throw new Error('Order not found')
-  } else {
-    res.json(order)
   }
 })
 
 // @desc    Update order to paid
-// @route   PUT /api/orders/:id/pay
-// @access  Private
-const updateOrderToPaid = asyncHandler(async function (req, res) {
-  const user = await User.findById(req.user._id)
+// @route   PUT /api/orders/:id/delivered
+// @access  Private/admin
+const updateOrderToDelivered = asyncHandler(async function (req, res) {
+  const order = await Order.findById(req.params.id)
+  if (order) {
+    order.isDelivered = true
+    order.deliveredAt = Date.now()
 
-  if (user.isAdmin) {
-    const order = await Order.findById(req.params.id)
-    if (order) {
-      order.isPaid = true
-      order.paidAt = Date.now()
-
-      const updateOrder = await order.save()
-      res.json(updateOrder)
-    } else {
-      res.status(404)
-      throw new Error('Order not found')
-    }
+    const updateOrder = await order.save()
+    res.json(updateOrder)
   } else {
-    res.status(401)
-    throw new Error('You are not allowed to update')
+    res.status(404)
+    throw new Error('Order not found')
   }
 })
 
@@ -80,12 +114,27 @@ const updateOrderSentPayment = asyncHandler(async function (req, res) {
   }
 })
 
-// @desc    Get logged in user orders
-// @route   Get /api/orders/myorders
-// @access  Private
-const getMyOrders = asyncHandler(async function (req, res) {
-  const order = await Order.find({ user: req.user._id })
-  res.json(order)
+// DELETE
+
+// @desc    Delete order by ID
+// @route   DELETE /api/orders/:id/delete
+// @access  Private/admin
+const deleteOrderById = asyncHandler(async function (req, res) {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    res.status(404)
+    throw new Error('Invalid request parameters')
+  }
+
+  const order = await Order.findById(req.params.id)
+
+  if (order) {
+    await order.remove()
+    res.json({ message: 'Order deleted successfully' })
+  } else {
+    res.status(404)
+    throw new Error('Order not found')
+  }
 })
 
-export { addOrderItems, getOrderById, updateOrderToPaid, getMyOrders, updateOrderSentPayment }
+
+export { addOrderItems, getOrderById, updateOrderToPaid, getMyOrders, updateOrderSentPayment, getAllOrders, deleteOrderById, updateOrderToDelivered }
