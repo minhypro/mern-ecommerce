@@ -1,15 +1,9 @@
 import React from 'react'
+import numeral from 'numeral'
 
 function Price({ children }) {
-  function numberWithCommas(x) {
-    if (x) {
-      x = x.toString()
-      var pattern = /(-?\d+)(\d{3})/
-      while (pattern.test(x)) x = x.replace(pattern, '$1,$2')
-      return x
-    }
-  }
-  return <span>{numberWithCommas(children)}</span>
+  const price = numeral(children).format('0,0')
+  return <span>{price}</span>
 }
 
 export default Price
