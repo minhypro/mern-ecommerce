@@ -14,6 +14,9 @@ import {
   PRODUCT_UPDATE_REQUEST,
   PRODUCT_UPDATE_SUCCESS,
   PRODUCT_UPDATE_FAIL,
+  PRODUCT_CREATE_REVIEW_REQUEST,
+  PRODUCT_CREATE_REVIEW_SUCCESS,
+  PRODUCT_CREATE_REVIEW_FAIL,
 } from '../constants/productConstants'
 import productsApi from '../api/productsApi'
 
@@ -121,6 +124,29 @@ export const updateProduct = (product) => async (dispatch, getState) => {
   } catch (err) {
     dispatch({
       type: PRODUCT_UPDATE_FAIL,
+      payload: err,
+    })
+  }
+}
+
+export const productCreateReview = (productId, review) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: PRODUCT_CREATE_REVIEW_REQUEST,
+    })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    await productsApi.createProductReview(productId, review, userInfo.token)
+
+    dispatch({
+      type: PRODUCT_CREATE_REVIEW_SUCCESS,
+    })
+  } catch (err) {
+    dispatch({
+      type: PRODUCT_CREATE_REVIEW_FAIL,
       payload: err,
     })
   }

@@ -34,6 +34,15 @@ const productsApi = {
     }
     return axiosClient.put(`/api/products/${product.id}/update`, product, config)
   },
+  createProductReview: (productId, review, token) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token,
+      },
+    }
+    return axiosClient.post(`/api/products/${productId}/reviews`, review, config)
+  },
 }
 
 export default productsApi

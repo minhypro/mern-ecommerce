@@ -87,6 +87,7 @@ const createProductReview = asyncHandler(async (req, res) => {
       rating: Number(rating),
       comment,
       user: req.user._id,
+      createdAt: Date.now()
     }
 
     product.reviews.push(review)

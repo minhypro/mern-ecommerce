@@ -4,7 +4,7 @@ function Rating({ value, text, color }) {
 
     return (
         <>
-            <div className='rating my-2'>
+            <span className='rating my-2'>
                 <span>
                     <i
                         style={{ color }}
@@ -66,7 +66,7 @@ function Rating({ value, text, color }) {
                     ></i>
                 </span>
                 <span> {text && text}</span>
-            </div>
+            </span>
         </>
     )
 }
