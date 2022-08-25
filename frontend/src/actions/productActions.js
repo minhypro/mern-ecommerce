@@ -17,10 +17,15 @@ import {
   PRODUCT_CREATE_REVIEW_REQUEST,
   PRODUCT_CREATE_REVIEW_SUCCESS,
   PRODUCT_CREATE_REVIEW_FAIL,
+  PRODUCT_TOPRATED_REQUEST,
+  PRODUCT_TOPRATED_SUCCESS,
+  PRODUCT_TOPRATED_FAIL,
 } from '../constants/productConstants'
 import productsApi from '../api/productsApi'
 
-export const listProducts = (keyword = '', pageNumber ='') => async (dispatch) => {
+export const listProducts =
+  (keyword = '', pageNumber = '') =>
+  async (dispatch) => {
     try {
       dispatch({ type: PRODUCT_LIST_REQUEST })
 
@@ -37,6 +42,24 @@ export const listProducts = (keyword = '', pageNumber ='') => async (dispatch) =
       })
     }
   }
+
+export const listTopRatedProducts = () => async (dispatch) => {
+  try {
+    dispatch({ type: PRODUCT_TOPRATED_REQUEST })
+
+    const data = await productsApi.getTopRatedProducts()
+
+    dispatch({
+      type: PRODUCT_TOPRATED_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_TOPRATED_FAIL,
+      payload: error.response,
+    })
+  }
+}
 
 export const listProductDetails = (id) => async (dispatch) => {
   try {

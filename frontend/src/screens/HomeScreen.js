@@ -7,6 +7,7 @@ import { listProducts } from '../actions/productActions'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 import Paginate from '../components/Paginate'
+import ProductCarousel from '../components/ProductCarousel'
 
 function HomeScreen() {
   const dispatch = useDispatch()
@@ -24,6 +25,7 @@ function HomeScreen() {
 
   return (
     <>
+    {!keyword && <ProductCarousel/>}
       <h1>Danh sách sản phẩm</h1>
       {loading ? (
         <Loader />

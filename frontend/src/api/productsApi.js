@@ -7,6 +7,9 @@ const productsApi = {
   getProduct: (id) => {
     return axiosClient.get('/api/products/' + id)
   },
+  getTopRatedProducts: () => {
+    return axiosClient.get('/api/products/topRated')
+  },
   deleteProduct: (id, token) => {
     const config = {
       headers: {
@@ -43,6 +46,7 @@ const productsApi = {
     }
     return axiosClient.post(`/api/products/${productId}/reviews`, review, config)
   },
+  
 }
 
 export default productsApi
