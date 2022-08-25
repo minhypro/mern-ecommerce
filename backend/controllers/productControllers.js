@@ -9,7 +9,11 @@ import asyncHandler from 'express-async-handler'
 // @access  Public
 
 const getProducts = asyncHandler(async function (req, res) {
-  const products = await Product.find()
+  const keyword = req.query.keyword 
+  ? { name: { $regex: req.query.keyword, $options: 'i' } } 
+  : {}
+
+  const products = await Product.find(keyword)
   if (products) {
     res.json(products)
   } else {
@@ -87,7 +91,7 @@ const createProductReview = asyncHandler(async (req, res) => {
       rating: Number(rating),
       comment,
       user: req.user._id,
-      createdAt: Date.now()
+      createdAt: Date.now(),
     }
 
     product.reviews.push(review)
@@ -95,8 +99,7 @@ const createProductReview = asyncHandler(async (req, res) => {
     product.numReviews = product.reviews.length
 
     product.rating =
-      product.reviews.reduce((acc, item) => item.rating + acc, 0) /
-      product.reviews.length
+      product.reviews.reduce((acc, item) => item.rating + acc, 0) / product.reviews.length
 
     await product.save()
     res.status(201).json({ message: 'Review added' })
@@ -155,4 +158,11 @@ const deleteProductById = asyncHandler(async function (req, res) {
   }
 })
 
-export { getProducts, getProductById, deleteProductById, addProduct, updateProduct, createProductReview }
+export {
+  getProducts,
+  getProductById,
+  deleteProductById,
+  addProduct,
+  updateProduct,
+  createProductReview,
+}

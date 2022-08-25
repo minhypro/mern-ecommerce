@@ -19,7 +19,8 @@ import ProductEditScreen from '../screens/ProductEditScreen'
 function Routes() {
   return (
     <ReactRoutes>
-      <Route path='/' element={<HomeScreen />} />
+      <Route path='/' element={<HomeScreen />} exact />
+      <Route path='/search/:keyword' element={<HomeScreen />} />
 
       <Route path='/products/:id' element={<ProductScreen />} />
       <Route path='/cart' element={<CartScreen />} />
