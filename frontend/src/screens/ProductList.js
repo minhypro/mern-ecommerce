@@ -109,6 +109,7 @@ function ProductList() {
             </tbody>
           </Table>
           <Paginate pages={pages} page={page} keyword={params.keyword ? params.keyword : ''} isAdmin={true} />
+          {products.length === 0 && <Message variant='danger'>Không tìm thấy kết quả phù hợp</Message>}
         </>
       )}
       <Modal show={show} onHide={closeModalHandler} centered backdrop='static' keyboard={false}>

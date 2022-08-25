@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import {useNavigate} from 'react-router-dom'
 import { Form, Button } from 'react-bootstrap'
 
-function SearchBox(isAdmin = false) {
+function SearchBox({isAdmin = false}) {
   const [keyword, setKeyword] = useState('')
   const navigate = useNavigate()
 

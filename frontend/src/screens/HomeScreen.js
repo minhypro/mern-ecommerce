@@ -33,6 +33,7 @@ function HomeScreen() {
         <Message variant='danger'>{error.data.message}</Message>
       ) : (
         <>
+        {products.length === 0 && <Message variant='danger'>Không tìm thấy kết quả phù hợp</Message>}
           <Row>
             {products.map((product) => (
               <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
