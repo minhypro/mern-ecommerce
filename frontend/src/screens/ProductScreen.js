@@ -8,6 +8,7 @@ import Price from '../components/Price'
 import { listProductDetails, productCreateReview } from '../actions/productActions'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
+import Meta from '../components/Meta'
 import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants'
 
 function ProductScreen() {
@@ -68,6 +69,7 @@ function ProductScreen() {
 
   return (
     <>
+    <Meta title={product.name} />
       <Link className='btn btn-light my-3' to='/'>
         Quay lại
       </Link>

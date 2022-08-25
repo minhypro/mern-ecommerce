@@ -6,6 +6,7 @@ import Message from '../components/Message'
 import { addToCart, removeFromCart } from '../actions/cartActions'
 import CheckoutStep from '../components/CheckoutStep'
 import Price from '../components/Price'
+import Meta from '../components/Meta'
 
 function CartScreen() {
   const productId = useParams().id
@@ -39,6 +40,8 @@ function CartScreen() {
     : 2
 
   return (
+    <>
+    <Meta title="Giỏ hàng" />
     <Row>
       <CheckoutStep step={stepCount} />
       <Col md={8}>
@@ -113,6 +116,7 @@ function CartScreen() {
         </Card>
       </Col>
     </Row>
+    </>
   )
 }
 
