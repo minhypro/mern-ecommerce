@@ -9,17 +9,17 @@ import asyncHandler from 'express-async-handler'
 // @access  Public
 
 const getProducts = asyncHandler(async function (req, res) {
+  const pageSize = 12
+  const page = Number(req.query.pageNumber) || 1
+
   const keyword = req.query.keyword 
   ? { name: { $regex: req.query.keyword, $options: 'i' } } 
   : {}
 
-  const products = await Product.find(keyword)
-  if (products) {
-    res.json(products)
-  } else {
-    res.status(404)
-    throw new Error('Product not found')
-  }
+  const count = await Product.countDocuments(keyword)
+  const products = await Product.find(keyword).limit(pageSize).skip(pageSize * (page - 1))
+
+  res.json({products, page, pages: Math.ceil(count / pageSize)})
 })
 
 // @desc    Fetch specific product

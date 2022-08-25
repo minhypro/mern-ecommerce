@@ -21,6 +21,8 @@ function Routes() {
     <ReactRoutes>
       <Route path='/' element={<HomeScreen />} exact />
       <Route path='/search/:keyword' element={<HomeScreen />} />
+      <Route path='/page/:pageNumber' element={<HomeScreen />} exact />
+      <Route path='/search/:keyword/page/:pageNumber' element={<HomeScreen />} />
 
       <Route path='/products/:id' element={<ProductScreen />} />
       <Route path='/cart' element={<CartScreen />} />
@@ -37,7 +39,10 @@ function Routes() {
       <Route path='/admin/users' element={<UserListScreen />} />
       <Route path='/admin/users/:id/edit' element={<UserEditScreen />} />
       <Route path='/admin/products' element={<ProductList />} />
-      <Route path='/admin/products/:id/edit' element={<ProductEditScreen />} />
+      <Route path='/admin/products/search/:keyword' element={<ProductList />} />
+      <Route path='/admin/products/page/:pageNumber' element={<ProductList />} />
+      <Route path='/admin/products/search/:keyword/page/:pageNumber' element={<ProductList />} />
+      <Route path='/admin/products/:id/edit'  element={<ProductEditScreen />} />
       <Route path='/admin/products/add' element={<ProductNewScreen />} />
       <Route path='/admin/orders' element={<OrderListScreen />} />
     </ReactRoutes>

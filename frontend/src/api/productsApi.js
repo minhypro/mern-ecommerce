@@ -1,15 +1,8 @@
 import axiosClient from './axiosClient'
 
 const productsApi = {
-  getAllProducts: (keyword) => {
-
-    if (keyword) {
-      return axiosClient.get(`/api/products?keyword=${keyword}`)
-
-    } else {
-      return axiosClient.get(`/api/products`)
-    }
-
+  getAllProducts: (keyword, pageNumber) => {
+      return axiosClient.get(`/api/products?keyword=${keyword}&pageNumber=${pageNumber}`)
   },
   getProduct: (id) => {
     return axiosClient.get('/api/products/' + id)
