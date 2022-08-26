@@ -1,8 +1,10 @@
 import axiosClient from './axiosClient'
 
 const productsApi = {
-  getAllProducts: (keyword, pageNumber) => {
-      return axiosClient.get(`/api/products?keyword=${keyword}&pageNumber=${pageNumber}`)
+  getAllProducts: (keyword, pageNumber, category) => {
+    return axiosClient.get(
+      `/api/products?keyword=${keyword}&category=${category}&pageNumber=${pageNumber}`
+    )
   },
   getProduct: (id) => {
     return axiosClient.get('/api/products/' + id)
@@ -46,7 +48,6 @@ const productsApi = {
     }
     return axiosClient.post(`/api/products/${productId}/reviews`, review, config)
   },
-  
 }
 
 export default productsApi

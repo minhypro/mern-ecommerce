@@ -1,21 +1,22 @@
 import React from 'react'
 import { Spinner } from 'react-bootstrap'
 
-function Loader() {
-    return (
-        <Spinner
-            animation='border'
-            role='status'
-            style={{
-                width: '100px',
-                height: '100px',
-                margin: 'auto',
-                display: 'block'
-
-            }} >
-            <span className='visually-hidden' >Đang tải...</span>
-        </Spinner>
-    )
+function Loader({ customStyle }) {
+  return (
+    <Spinner
+      animation='border'
+      role='status'
+      style={{
+        width: '100px',
+        height: '100px',
+        margin: 'auto',
+        display: 'block',
+        ...customStyle,
+      }}
+    >
+      <span className='visually-hidden'>Đang tải...</span>
+    </Spinner>
+  )
 }
 
 export default Loader

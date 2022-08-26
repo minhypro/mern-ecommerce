@@ -9,13 +9,21 @@ import asyncHandler from 'express-async-handler'
 // @access  Public
 
 const getProducts = asyncHandler(async function (req, res) {
-  const pageSize = 12
+  const pageSize = 8
   const page = Number(req.query.pageNumber) || 1
+  const category = req.query.category === 'all' ? '' : req.query.category
 
-  const keyword = req.query.keyword ? { name: { $regex: req.query.keyword, $options: 'i' } } : {}
+  const keyword = req.query.keyword ? { name: { $regex: req.query.keyword, $options: 'i' } } : undefined
 
-  const count = await Product.countDocuments(keyword)
-  const products = await Product.find(keyword)
+  let query
+  if (category) {
+    query = { category, ...keyword}
+  } else {
+    query = keyword
+  }
+
+  const count = await Product.countDocuments(query)
+  const products = await Product.find(query)
     .limit(pageSize)
     .skip(pageSize * (page - 1))
 

@@ -24,12 +24,12 @@ import {
 import productsApi from '../api/productsApi'
 
 export const listProducts =
-  (keyword = '', pageNumber = '') =>
+  (keyword = '', pageNumber = '', category = '') =>
   async (dispatch) => {
     try {
       dispatch({ type: PRODUCT_LIST_REQUEST })
 
-      const data = await productsApi.getAllProducts(keyword, pageNumber)
+      const data = await productsApi.getAllProducts(keyword, pageNumber, category)
 
       dispatch({
         type: PRODUCT_LIST_SUCCESS,
