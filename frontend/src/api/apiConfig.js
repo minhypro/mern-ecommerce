@@ -1,5 +1,5 @@
 const apiConfig = {
-    baseUrl: `/`,
+    baseUrl: `http://localhost:4000/`,
     apiKey: process.env.API_KEY
 }
 

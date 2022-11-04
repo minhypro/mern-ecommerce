@@ -8,6 +8,8 @@ import productRoutes from './routes/productRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import orderRoutes from './routes/orderRoutes.js'
 import uploadRoutes from './routes/uploadRoutes.js'
+import session from 'express-session'
+import passport from 'passport'
 
 dotenv.config()
 const app = express()
@@ -24,6 +26,14 @@ connectDB()
 
 app.use(express.static('public'))
 app.use(bodyParser.json({ inflate: true }))
+
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false, // don't save session if unmodified
+  saveUninitialized: false, // don't create session until something stored
+  // store: new SQLiteStore({ db: 'sessions.db', dir: 'var/db' })
+}));
+app.use(passport.authenticate('session'));
 
 app.use('/api/products', productRoutes)
 app.use('/api/users', userRoutes)
